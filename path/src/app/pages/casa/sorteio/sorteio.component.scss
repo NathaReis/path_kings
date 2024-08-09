@@ -68,8 +68,8 @@
     background: var(--color1);
 }
 
-// .float:hover {
-//     box-shadow: 0 0 0 2px var(--color1), 0 0 20px var(--color2), 0 0 50px var(--color3);
-//     z-index: 2000;
-//     transition: .3s;
-// }
+.float:hover {
+    box-shadow: 0 0 0 2px var(--color3), 0 0 20px var(--color3), 0 0 50px var(--color3);
+    z-index: 2000;
+    transition: .3s;
+}

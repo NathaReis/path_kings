@@ -2,7 +2,9 @@ div {
     position: relative;
     width: 100dvw;
     height: 100dvh;
-    display: block;
+    display: grid;
+    align-items: center;
+    justify-content: center;
     color: var(--color5);
 }
 
