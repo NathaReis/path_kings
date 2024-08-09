@@ -1,0 +1,21 @@
+<path-container>
+  <path-header></path-header>
+  <body>
+    <section>
+      <div id="adicionar" (click)="gerarTela()">
+        <mat-icon>add</mat-icon>
+      </div>
+      <aside *ngFor="let tela of telas">
+        <nav class="aba">
+          <h3 class="numero" (click)="voltarTela(tela.numero)">Tela <i class="valor">{{ tela.numero }}</i></h3>
+          <div class="caixaFechar">
+            <p class="fechar" (click)="fecharTela(tela.numero)">X</p>
+          </div>
+        </nav>
+        <div class="tela">
+          <mat-icon>{{tela.icone}}</mat-icon>
+        </div>
+      </aside>      
+    </section>
+  </body>
+</path-container>

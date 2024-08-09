@@ -1,0 +1,58 @@
+<path-container background="cor2">
+    <path-header></path-header>
+    <body>
+
+        <form class="float controles" #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+            <div class="interacao">
+                <button mat-fab [disabled]="myForm.invalid ">
+                    <mat-icon>sync</mat-icon>
+                </button>
+                <button mat-fab color="warn">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+
+            <div class="configuracao">
+                <mat-form-field class="inputNumero">
+                    <mat-label>Inicial</mat-label>
+                    <input 
+                    name="numeroInicial"
+                    [(ngModel)]="numeroInicial"
+                    type="number" 
+                    matInput 
+                    placeholder="Ex. 0,1,2...">
+                </mat-form-field>
+
+                <mat-form-field class="inputNumero">
+                    <mat-label>Final</mat-label>
+                    <input 
+                    name="numeroFinal"
+                    [(ngModel)]="numeroFinal"
+                    type="number" 
+                    matInput 
+                    placeholder="Ex. 0,1,2...">
+                </mat-form-field>
+
+                <mat-button-toggle-group *ngIf="telas.length > 0" 
+                    class="buttonToggleBox"  
+                    name="telas" 
+                    [(ngModel)]="telaSelecionada" 
+                    multiple required aria-label="Font Style">
+                    <mat-button-toggle value="todas" (click)="toggleTodasTelas(true)">Todas</mat-button-toggle>
+                    <mat-button-toggle *ngFor="let tela of telas" value="{{tela.numero}}" (click)="toggleTodasTelas(false)">Tela {{tela.numero}}</mat-button-toggle>
+                </mat-button-toggle-group>  
+            </div>
+        </form>                                 
+
+
+        <div class="float numeros">
+
+        </div>
+        <div class="float historico">
+
+        </div>
+        <div class="resultadoAtual">
+
+        </div>
+    </body>
+</path-container>

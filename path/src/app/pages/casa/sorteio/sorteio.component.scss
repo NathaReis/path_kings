@@ -1,0 +1,75 @@
+.controles {
+    top: 10px;
+    left: 200px;
+    position: absolute;
+    width: calc(100vw - 410px);
+    height: 100px;
+    background: var(--color3);
+    border-radius: 0 50px 50px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.interacao {
+    position: absolute;
+    left: 0px;
+    width: 30%;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.configuracao {
+    position: absolute;
+    right: 50px;
+    width: 70%;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.inputNumero {
+    margin-top: 20px;
+    height: 80px;
+}
+
+.numeros {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 190px;
+    height: calc(100dvh - 150px);
+    background: var(--color4);
+    border-radius: 10px 0 100px 100px;
+}
+
+.historico {
+    position: absolute;
+    top: 110px;
+    left: 200px;
+    width: 150px;
+    height: calc(100dvh - 210px);
+    background: var(--color2);
+    border-radius: 0 0 40px 40px;
+}
+
+.resultadoAtual {
+    position: absolute;
+    top: 110px;
+    left: 350px;
+    width: calc(100vw - 350px);
+    height: calc(100dvh - 180px);
+    background: var(--color1);
+}
+
+// .float:hover {
+//     box-shadow: 0 0 0 2px var(--color1), 0 0 20px var(--color2), 0 0 50px var(--color3);
+//     z-index: 2000;
+//     transition: .3s;
+// }

@@ -1,0 +1,38 @@
+div {
+    position: relative;
+    width: 100dvw;
+    height: 100dvh;
+    display: block;
+    color: var(--color5);
+}
+
+.padrao {
+    background: linear-gradient(45deg, var(--color1), var(--color2));
+}
+
+.tela {
+    background: var(--backgroundTela);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.cor1 {
+    background: var(--color1);
+}
+
+.cor2 {
+    background: var(--color2);
+}
+
+.cor3 {
+    background: var(--color3);
+}
+
+.cor4 {
+    background: var(--color4);
+}
+
+.cor5 {
+    background: var(--color5);
+}

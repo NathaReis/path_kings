@@ -1,0 +1,135 @@
+section {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    min-width: 250px;
+    height: 170px;
+    background: rgba(126, 126, 126, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 10px #0005, 0 0 10px #0006;
+    display: flex;
+}
+
+
+section #adicionar {
+    position: absolute;
+    top: -40px;
+    right: -35px;
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+    border-radius: 5px 15px 0 0;
+    background: #eee;
+    box-shadow: 0 5px 5px #00000052;
+    cursor: pointer;
+}
+
+section #adicionar:hover {
+    opacity: .8;
+}
+
+section #temas {
+    position: absolute;
+    top: 0;
+    right: -35px;
+    width: 30px;
+    height: 170px;
+
+    display: grid;
+    align-items: center;
+    justify-content: left;
+}
+
+section aside {
+    position: relative;
+    width: 250px;
+    height: 170px;
+    display: grid;
+    place-items: center;
+    font-family: "Poppins", sans-serif;
+}
+
+section .aba {
+    position: absolute;
+    width: 235px;
+    height: 30px;
+    top: -40px;
+    left: calc(250/2 - 235/2);
+    border-radius: 0 15px 15px 15px;
+    background: #eee;
+    box-shadow: 0 0 5px #0002;
+    display: flex;
+    justify-content: space-around;
+}
+
+section .aba .numero {
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+section .aba .numero .valor {
+    color: #5aa7f0;
+}
+
+section .aba .numero:hover {
+    opacity: .8;
+}
+
+section .aba .caixaFechar {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    place-items: center;
+}
+
+section .aba .fechar {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 2.5px;
+    left: 2.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: .1s;
+}
+
+section .aba .fechar:hover {
+    animation: fecharAba .3s ease-out both;
+}
+
+@keyframes fecharAba {
+    from {
+        background: transparent;
+    }
+    to {
+        background: #ffa1a19c;
+        color: #8b4242;
+    }
+}
+
+section .tela {
+    width: 235px;
+    height: 155px;
+    background: #eee3;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+section:nth-child(1) .tela {
+    border-radius: 15px;
+}

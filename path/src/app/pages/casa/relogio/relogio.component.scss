@@ -1,0 +1,29 @@
+body {
+    display: grid;
+    place-items: center;
+}
+
+form {
+    width: 400px;
+    min-height: 200px;
+    background: #eee9;
+    border-radius: 20px;
+    padding: 20px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.buttonToggleBox {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+#minutos {
+    text-align: center;
+}
