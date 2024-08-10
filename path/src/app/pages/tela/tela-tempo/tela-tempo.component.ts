@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Cidade } from 'src/app/models/Cidade';
-import { Clima } from 'src/app/models/Clima';
+import { GeoService } from '../../../services/geo.service';
+import { Clima } from '../../../models/Clima';
 
 @Component({
   selector: 'app-tela-tempo',
@@ -12,15 +12,13 @@ import { Clima } from 'src/app/models/Clima';
 export class TelaTempoComponent implements OnInit {
   id: string = '';
 
-  nomeCidade = 'Sete Lagoas';
-  chaveApi = 'af771379a3ebcb50459501b069cdebc8';
   clima: Clima = {src: '', cep: '', temperatura: '', descricao: ''};
   hora: string = '00';
   minuto: string = '00';
   segundo: number = 59;
   esperarParaContar: boolean = false;
 
-  constructor(private route: ActivatedRoute,) { }
+  constructor(private route: ActivatedRoute,private geo: GeoService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
@@ -34,53 +32,16 @@ export class TelaTempoComponent implements OnInit {
       }
     };// Busca localStorage
     this.buscarSessionStorage();
-    this.formatarInformacaoClima();
-  }
-
-  async buscarCidade() {
-    const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURI(this.nomeCidade)}&appid=${this.chaveApi}`;
-    const resultado = await fetch(apiUrl);
-    const resultadoUrl = resultado.url;
-
-    const dados: any = await fetch(resultadoUrl)
-    .then(resposta => resposta.json())
-    .catch(() => false);
-
-    return dados[0];      
+    this.buscarClima();
   }
 
   async buscarClima() {
-    const dadosCidade: Cidade = await this.buscarCidade();
+    this.clima = await this.geo.buscarClima();
 
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${dadosCidade.lat}&lon=${dadosCidade.lon}&appid=${this.chaveApi}&units=metric&lang=pt_br`;
-    const resultado = await fetch(apiUrl);
-    const resultadoUrl = resultado.url;
-
-    const dados = await fetch(resultadoUrl)
-    .then(resposta => resposta.json())
-    .catch(() => false);
-
-    const informacao = dados ? { dados: dados, dadosCidade: dadosCidade } : false;
-    return informacao;   
+    setTimeout(() => {
+      this.buscarClima();
+    }, 600000) // 10 minutos
   }
-
-  async formatarInformacaoClima() {
-      const informacao: any = await this.buscarClima();
-
-      if(informacao) {
-        this.clima = {
-          src:`http://openweathermap.org/img/wn/${informacao.dados.weather[0].icon}@2x.png`,
-          temperatura: `${informacao.dados.main.temp} C°`,
-          descricao: String(informacao.dados.weather[0].description).toUpperCase(),
-          cep: `${informacao.dadosCidade.name} ${informacao.dadosCidade.country}`,      
-        };
-      }
-
-      setTimeout(() => {
-        this.formatarInformacaoClima();
-      }, 600000) // 10 minutos
-  }
-
   formatarHora(hora: number) {
     return hora < 10 ? `0${hora}` : `${hora}`;
   }

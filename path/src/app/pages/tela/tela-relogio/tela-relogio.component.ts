@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Cidade } from 'src/app/models/Cidade';
-import { Clima } from 'src/app/models/Clima';
+import { Clima } from '../../../models/Clima';
+import { GeoService } from '../../../services/geo.service';
+
 
 @Component({
   selector: 'app-tela-relogio',
@@ -12,58 +13,22 @@ export class TelaRelogioComponent implements OnInit {
   id: string = '';
   telaUrl: string = '';
 
-  nomeCidade = 'Sete Lagoas';
-  chaveApi = 'af771379a3ebcb50459501b069cdebc8';
   clima: Clima = {src: '', cep: '', temperatura: '', descricao: ''};
   hora: string = '00';
   minuto: string = '00';
 
+  constructor (private geo: GeoService) {}
+
   ngOnInit(): void {
     this.buscarHorario();
-    this.formatarInformacaoClima();
-  }
-
-  async buscarCidade() {
-    const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURI(this.nomeCidade)}&appid=${this.chaveApi}`;
-    const resultado = await fetch(apiUrl);
-    const resultadoUrl = resultado.url;
-
-    const dados: any = await fetch(resultadoUrl)
-    .then(resposta => resposta.json())
-    .catch(() => false);
-
-    return dados[0];      
+    this.buscarClima();
   }
 
   async buscarClima() {
-    const dadosCidade: Cidade = await this.buscarCidade();
-
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${dadosCidade.lat}&lon=${dadosCidade.lon}&appid=${this.chaveApi}&units=metric&lang=pt_br`;
-    const resultado = await fetch(apiUrl);
-    const resultadoUrl = resultado.url;
-
-    const dados = await fetch(resultadoUrl)
-    .then(resposta => resposta.json())
-    .catch(() => false);
-
-    const informacao = dados ? { dados: dados, dadosCidade: dadosCidade } : false;
-    return informacao;   
-  }
-
-  async formatarInformacaoClima() {
-      const informacao: any = await this.buscarClima();
-
-      if(informacao) {
-        this.clima = {
-          src:`http://openweathermap.org/img/wn/${informacao.dados.weather[0].icon}@2x.png`,
-          temperatura: `${informacao.dados.main.temp} C°`,
-          descricao: String(informacao.dados.weather[0].description).toUpperCase(),
-          cep: `${informacao.dadosCidade.name} ${informacao.dadosCidade.country}`,      
-        };
-      }
+      this.clima = await this.geo.buscarClima();
 
       setTimeout(() => {
-        this.formatarInformacaoClima();
+        this.buscarClima();
       }, 600000) // 10 minutos
   }
 

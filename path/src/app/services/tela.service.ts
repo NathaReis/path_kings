@@ -9,7 +9,7 @@ import { Tela } from '../models/Tela';
 })
 export class TelaService {
   listaTelas: Tela[] = [];
-  configuracaoOpenTela: string = `toolbar=yes,location=yes,directories=no, status=no, menubar=yes,scrollbars=yes, resizable=no,copyhistory=yes, width=500px,height=200px`;
+  configuracaoOpenTela: string = `toolbar=yes,location=yes,directories=no, status=no, menubar=yes,scrollbars=yes, resizable=no,copyhistory=yes, width=500px,height=500px`;
   
   constructor(readonly iconeRotaService: IconeRotaService) { }
 
@@ -38,7 +38,7 @@ export class TelaService {
   }
 
   excluirTelaLista(numero: number): Tela[] {
-    this.listaTelas = this.ordenarLista(this.listaTelas)
+    this.listaTelas = this.ordenarLista(this.listaTelas); // A exclusão só é bem sucedida com telas ordenadas.
     let novaLista: Tela[] = this.listaTelas.filter(el => {
       if(el.numero !== numero) {
         if(el.numero < numero) {
@@ -54,9 +54,9 @@ export class TelaService {
   }
 
   fechar(numero: number): Tela[] {
-    localStorage.setItem("tela", `${numero},fechar`);// Envia a mensagem para tela se fechar
-    this.listaTelas = this.excluirTelaLista(numero);
-    this.registrarSessionStorage();
+    localStorage.setItem("tela", `${numero},fechar`);// Envia comando para fechar a tela
+    this.listaTelas = this.excluirTelaLista(numero);// Exclui tela da lista local
+    this.registrarSessionStorage();// Registra a nova lista sem a tela na sessão 
     return this.listaTelas;
   }
 
@@ -73,11 +73,7 @@ export class TelaService {
       this.registrarSessionStorage();
       return this.listaTelas;
     }
-    return undefined;
-  }
-
-  gerarTelaEspecifica(rota: string) {
-    window.open(`../tela/${rota}/local`,"_blank",this.configuracaoOpenTela);
+    return;
   }
 
   navegar(rota: string, numeros: number[]): void {
@@ -87,42 +83,40 @@ export class TelaService {
           tela.icone = this.iconeRotaService.iconeRota(rota);
         }
       })
-      const rotaUrl = rota === 'tela' ? `tela/${numero}` : `tela/${rota}/${numero}`;
-      localStorage.setItem("tela", `${numero},${rotaUrl}`);
+      const rotaUrl = rota === 'tela' ? `tela/${numero}` : `tela/${rota}/${numero}`;// Caso esteja voltando para a tela inicial tela/numero caso contrário é preciso a rota dentro de tela
+      localStorage.setItem("tela", `${numero},${rotaUrl}`);// Envia comando de navegação
     })
-    this.registrarSessionStorage();
+    this.registrarSessionStorage();// Registra a nova rota na sessão
   }
 
-  recarregar(numeros: number[] | 'local') {
-    if(numeros == 'local') {
-      localStorage.setItem("tela", `local,recarregar`);
-    }
-    else {
-      numeros.forEach((numero: number) => {
-        localStorage.setItem("tela", `${numero},recarregar`);
-      });
-    }
+  recarregar(numeros: number[]) {
+    numeros.map((numero: number) => {
+      localStorage.setItem("tela", `${numero},recarregar`);// Envia comando para recarregar tela
+    });
   }
 
   registrarSessionStorage(): void {
     if(this.listaTelas.length > 0) {
-      const numeros = this.listaTelas.map(el => el.numero);
-      const icones = this.listaTelas.map(el => el.icone);
+      const numeros = this.listaTelas.map(el => el.numero);// Busca os números das telas
+      const icones = this.listaTelas.map(el => el.icone);// Busca as rotas/icones das telas
 
-      const numerosStr = numeros.join(",");
+      const numerosStr = numeros.join(",");// Transforma eles em uma array
       const iconesStr = icones.join(",");
 
-      sessionStorage.setItem("numeros", numerosStr); 
+      sessionStorage.setItem("numeros", numerosStr); // Registra na sessão
       sessionStorage.setItem("icones", iconesStr); 
       return;
     }
-    sessionStorage.removeItem("numeros");
+    sessionStorage.removeItem("numeros");// Se não existir lista, exclui a sessão
     sessionStorage.removeItem("icones");
   }
 
   eventosLocalStorage(resultado: any, id: string, telaUrl: string, router: Router): void {
-    if(resultado[0] == id) {
-      switch(resultado[1]) {
+    const idResultado = resultado[0];
+    const comando = resultado[1];
+    
+    if(idResultado == id) {
+      switch(comando) {
         case 'fechar':
           window.close();
           break
@@ -133,11 +127,11 @@ export class TelaService {
         case 'recarregar':
           location.reload();
           break
-        default:
-          const rotaUrl = resultado[1];
+        default: // Caso seja para navegar, o comando é a rota
+          const rotaUrl = comando;
           router.navigate([`${rotaUrl}`]);
       }
-      localStorage.removeItem("tela");
+      localStorage.removeItem("tela"); // Remove tela após a ação
     }
   }// Valida o localStorage
 }

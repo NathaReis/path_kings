@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TelaService } from 'src/app/services/tela.service';
-import { Tela } from 'src/app/models/Tela';
+import { TelaService } from '../../../services/tela.service';
+import { Tela } from '../../../models/Tela';
 
 @Component({
   selector: 'app-relogio',
@@ -31,16 +31,16 @@ export class RelogioComponent implements OnInit {
   }
 
   configurarTempo(telas?: number[]) {
-    const retorno = telas ? `${telas},${this.minutos}` : `local,${this.minutos}`;
     if(telas) {
+      const retorno = `${telas},${this.minutos}`;
       this.telaService.recarregar(telas);
+      setTimeout(() => {
+        localStorage.setItem("tempo", retorno);
+      }, 5000); // 5 segundos para enviar a configuração do tempo
     }
     else {
-      this.telaService.recarregar('local');
+      console.error('Selecione uma tela.')
     }
-    setTimeout(() => {
-      localStorage.setItem("tempo", retorno);
-    }, 3000); // 3 segundos
   }
 
   onSubmit(form: any): void {
@@ -50,22 +50,17 @@ export class RelogioComponent implements OnInit {
     if(telas) {
       if(telas == 'todas') {
         telas = this.telas.map((tela: Tela) => tela.numero);
-        this.telaService.navegar(tipo, telas);
       }// Se todas as telas 
-      else {
-        this.telaService.navegar(tipo, telas);
-      }// Se alguma(s) tela(s) 
+
+      this.telaService.navegar(tipo, telas); // Navegar para tela selecionada
 
       if(tipo == 'tempo') {
         this.configurarTempo(telas);
-      }    
+      }// Se for temporizador
     }
     else {
-      this.telaService.gerarTelaEspecifica(tipo);
-      if(tipo == 'tempo') {
-        this.configurarTempo();
-      }   
-    }// Se tela local
+      console.error('Selecione uma tela.')
+    }
     this.limparForm();
   }
 }

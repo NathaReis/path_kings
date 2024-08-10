@@ -19,7 +19,7 @@
         <mat-label>Tempo hh:mm</mat-label>
         <input matInput id="minutos" type="time" name="minutos" [(ngModel)]="minutos" required>
       </mat-form-field>
-      <button class="button" type="submit" [disabled]="myForm.invalid">Enviar</button>
+      <button class="button" type="submit" [disabled]="myForm.invalid || telas.length <= 0">Enviar</button>
     </form>
   </body>
 </path-container>
