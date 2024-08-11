@@ -12,6 +12,7 @@ import { TemaService } from 'src/app/services/tema.service';
 export class HeaderComponent implements OnInit {
   temaClaro: boolean = true;
   temaColorido: boolean = false;
+  mobile: string = 'desativado';
 
   constructor(
     readonly headerService: HeaderService,
@@ -26,6 +27,10 @@ export class HeaderComponent implements OnInit {
 
   get header(): Header[] {
     return this.headerService.buscarHeader;
+  }
+
+  toggleMenu(): void {
+    this.mobile = this.mobile == 'desativado' ? 'ativado' : 'desativado';
   }
 
   configTema(): void {

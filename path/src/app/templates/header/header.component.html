@@ -1,13 +1,18 @@
 <header>
     <nav>
       <ul>
-        <li *ngFor="let item of header">
+        <li *ngFor="let item of header" class="desktop">
           <a routerLink="{{ item.rota }}" ngClass="{{ item.class }}">
             <mat-icon>
               {{ item.icon }}
             </mat-icon>
             {{ item.nome }}
           </a> 
+        </li>
+        <li class="mobile">
+          <button mat-fab color="info" (click)="toggleMenu()">
+            <mat-icon>menu</mat-icon>
+          </button> 
         </li>
         <li class="temas">
           <mat-slide-toggle [(ngModel)]="temaClaro" (change)="configTema()">
@@ -22,5 +27,26 @@
           </mat-slide-toggle>
         </li>
       </ul>
+    </nav>
+    <nav [ngClass]="mobile">
+      <div class="vidro"></div>
+      <div class="menu">
+        <div class="header">
+          <h1>Path Kings</h1>
+          <button mat-fab color="warn" (click)="toggleMenu()">
+            <mat-icon>close</mat-icon>
+          </button>        
+        </div>
+        <div class="body">
+          <li *ngFor="let item of header">
+            <a routerLink="{{ item.rota }}">
+              <mat-icon>
+                {{ item.icon }}
+              </mat-icon>
+              {{ item.nome }}
+            </a> 
+          </li>
+        </div>
+      </div>
     </nav>
 </header>

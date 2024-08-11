@@ -49,6 +49,86 @@ header .temas {
     gap: 5px;
 }
 
+header .mobile {
+    display: none;
+    position: absolute;
+    right: 120px;
+}
+
+header .mobile button {
+    background: var(--color1);
+    color: var(--color5);
+}
+
 p {
     color: var(--color1);
+}
+
+nav.ativado {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    z-index: 2000;
+}
+
+.vidro {
+    width: 30dvw;
+    height: 100dvh;
+    background: #0002;
+    backdrop-filter: blur(2px);
+}
+
+.menu {
+    width: 70dvw;
+    height: 100dvh;
+    background: var(--color5);
+    display: block;
+}
+
+.menu .header {
+    width: 70dvw;
+    height: 140px;
+    background: var(--color4);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.menu .header h1 {
+    cursor: default;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+.menu .body {
+    width: 70dvw;
+    height: calc(100dvh - 140px);
+    display: block;
+}
+
+.menu .body a {
+    width: 70dvw;
+    margin: 0;
+    padding: 0;
+}
+.menu .body a:hover {
+    background: #0003;
+    color: var(--color1);
+}
+
+.desativado {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .desktop {
+        display: none;
+    }
+    header .mobile {
+        display: block;
+    }
 }
