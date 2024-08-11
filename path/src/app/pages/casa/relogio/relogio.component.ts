@@ -33,13 +33,7 @@ export class RelogioComponent implements OnInit {
   configurarTempo(telas?: number[]) {
     if(telas) {
       const retorno = `${telas},${this.minutos}`;
-      this.telaService.recarregar(telas);
-      setTimeout(() => {
-        localStorage.setItem("tempo", retorno);
-      }, 5000); // 5 segundos para enviar a configuração do tempo
-    }
-    else {
-      console.error('Selecione uma tela.')
+      localStorage.setItem("tempo", retorno);
     }
   }
 
