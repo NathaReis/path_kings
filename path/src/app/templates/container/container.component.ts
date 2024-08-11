@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RelogioService } from 'src/app/services/relogio.service';
 
 import { TelaService } from 'src/app/services/tela.service';
 import { TemaService } from 'src/app/services/tema.service';
@@ -15,10 +16,11 @@ export class ContainerComponent implements OnInit {
   @Output() tempo = new EventEmitter<string>();
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private temaService: TemaService,
     private telaService: TelaService,
-    private route: ActivatedRoute,
-    private router: Router
+    private relogioService: RelogioService
   ) {}
 
   ngOnInit(): void {
@@ -26,11 +28,11 @@ export class ContainerComponent implements OnInit {
     this.temaService.configTema(temaSalvo);
 
     window.onstorage = (event) => {
-      if(this.monitor == 'true') {
-        const chave = event.key;
-        const novoValor = event.newValue;
-        const velhoValor = event.oldValue;
+      const chave = event.key;
+      const novoValor = event.newValue;
+      const velhoValor = event.oldValue;
 
+      if(this.monitor == 'true') {
         if(chave === 'tema') {
           const html = document.querySelector("html");
           const tema: string = String(novoValor);
@@ -67,6 +69,17 @@ export class ContainerComponent implements OnInit {
 
             this.tempo.emit(horario);
           }
+        }
+      }
+      else {
+        if(chave === 'tempo_status_1') {
+          this.relogioService.setRelogio(1,String(novoValor));
+        }
+        if(chave === 'tempo_status_2') {
+          this.relogioService.setRelogio(2,String(novoValor));
+        }
+        if(chave === 'tempo_status_3') {
+          this.relogioService.setRelogio(3,String(novoValor));
         }
       }
     }

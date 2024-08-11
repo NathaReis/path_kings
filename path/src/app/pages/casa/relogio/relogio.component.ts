@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { TelaService } from '../../../services/tela.service';
 import { Tela } from '../../../models/Tela';
+import { RelogioService } from 'src/app/services/relogio.service';
 
 @Component({
   selector: 'app-relogio',
@@ -14,7 +15,10 @@ export class RelogioComponent implements OnInit {
   minutos = '';
   telas: Tela[] = [];
 
-  constructor(private telaService: TelaService) { }
+  constructor(
+    private telaService: TelaService,
+    private relogioService: RelogioService
+  ) { }
 
   ngOnInit(): void {
     this.telas = this.telaService.buscar();
@@ -30,11 +34,38 @@ export class RelogioComponent implements OnInit {
     this.minutos = '';
   }
 
-  configurarTempo(telas?: number[]) {
-    if(telas) {
-      const retorno = `${telas},${this.minutos}`;
-      localStorage.setItem("tempo", retorno);
+  carregarPagina(tipo: string, telas: number[]): void {
+    this.telaService.navegar(tipo, telas); // Navegar para tela selecionada
+
+    for(let telaExistente of this.telas) {
+      for(let telaCriada of telas) {
+        if(telaExistente.numero == telaCriada) {
+          if(telaExistente.icone === 'access_time' || telaExistente.icone === 'timer') {
+            this.telaService.recarregar([telaExistente.numero]);
+            if(tipo == 'tempo') {
+              const retorno = `${telaCriada},${this.minutos}`;
+              setTimeout(() => {
+                this.configurarTempo(retorno);
+              },3000);
+            }
+          }// Se for uma tela de relogio recarregar para não enviar mais de um localStorage por vez
+          else {
+            if(tipo == 'tempo') {
+              const retorno = `${telaCriada},${this.minutos}`;
+              this.configurarTempo(retorno);
+            }
+          }
+        }
+      }
     }
+  }
+
+  configurarTempo(retorno: string): void {
+    localStorage.setItem("tempo", retorno);
+  }
+
+  get relogios(): { [key: number]: string } {
+    return this.relogioService.getAllRelogios();
   }
 
   onSubmit(form: any): void {
@@ -46,11 +77,7 @@ export class RelogioComponent implements OnInit {
         telas = this.telas.map((tela: Tela) => tela.numero);
       }// Se todas as telas 
 
-      this.telaService.navegar(tipo, telas); // Navegar para tela selecionada
-
-      if(tipo == 'tempo') {
-        this.configurarTempo(telas);
-      }// Se for temporizador
+      this.carregarPagina(tipo, telas);
     }
     else {
       console.error('Selecione uma tela.')

@@ -27,3 +27,21 @@ form {
 #minutos {
     text-align: center;
 }
+
+.status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: .5px dashed var(--color5);
+    border-radius: 5px;
+}

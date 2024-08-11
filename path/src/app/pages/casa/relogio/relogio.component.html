@@ -21,5 +21,14 @@
       </mat-form-field>
       <button class="button" type="submit" [disabled]="myForm.invalid || telas.length <= 0">Enviar</button>
     </form>
+
+    <div class="status">
+      <div *ngFor="let tela of telas">
+        <div *ngIf="tela.icone == 'access_time' || tela.icone == 'timer'" class="card">
+          <label>Tela {{ tela.numero }}</label>
+          {{ relogios[tela.numero] }}
+        </div>
+      </div>
+    </div>
   </body>
 </path-container>

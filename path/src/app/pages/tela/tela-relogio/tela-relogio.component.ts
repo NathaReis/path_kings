@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Clima } from '../../../models/Clima';
 import { GeoService } from '../../../services/geo.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -17,11 +18,15 @@ export class TelaRelogioComponent implements OnInit {
   hora: string = '00';
   minuto: string = '00';
 
-  constructor (private geo: GeoService) {}
+  constructor (private geo: GeoService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.buscarHorario();
     this.buscarClima();
+
+    this.route.params.subscribe((params: any) => {
+      this.id = String(params["id"]);
+    });// Busca id
   }
 
   async buscarClima() {
@@ -41,6 +46,8 @@ export class TelaRelogioComponent implements OnInit {
       const agora = new Date();
       this.hora = this.formatarHora(agora.getHours());
       this.minuto = this.formatarHora(agora.getMinutes());
-    }, 1000); // 1 minuto
+      const segundo = this.formatarHora(agora.getSeconds());
+      localStorage.setItem(`tempo_status_${this.id}`,`${this.hora}:${this.minuto}:${segundo}`);
+    }, 1000); // 1 segundo
   }
 }

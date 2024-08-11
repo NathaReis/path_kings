@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { Tela } from 'src/app/models/Tela';
 import { TelaService } from 'src/app/services/tela.service';
 
@@ -21,11 +22,7 @@ export class SorteioComponent implements OnInit {
     this.telas = this.telaService.buscar();
   }
 
-  toggleTodasTelas(ativar: boolean): void {
-    ativar ? this.telaSelecionada = ['todas'] : this.telaSelecionada = this.telaSelecionada.filter((tela: string) => tela !== 'todas');
-  }
-
   onSubmit(form: any): void {
-
+    console.log(form.value);
   }
 }

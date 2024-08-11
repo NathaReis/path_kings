@@ -58,6 +58,7 @@ export class TelaTempoComponent implements OnInit {
   registrarTempo(hora: string, minuto: string, segundo: string): void {
     sessionStorage.setItem(`tempo_${this.id}`,`${hora}:${minuto}`);
     sessionStorage.setItem(`segundo_${this.id}`,segundo);
+    localStorage.setItem(`tempo_status_${this.id}`,`${hora}:${minuto}:${segundo}`);
   }
 
   preencherTempo(hora: string, minuto: string, segundo: string): void {

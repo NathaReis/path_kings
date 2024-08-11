@@ -4,7 +4,7 @@
 
         <form class="float controles" #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
             <div class="interacao">
-                <button mat-fab [disabled]="myForm.invalid ">
+                <button mat-fab [disabled]="myForm.invalid || telas.length <= 0">
                     <mat-icon>sync</mat-icon>
                 </button>
                 <button mat-fab color="warn">
@@ -38,8 +38,7 @@
                     name="telas" 
                     [(ngModel)]="telaSelecionada" 
                     multiple required aria-label="Font Style">
-                    <mat-button-toggle value="todas" (click)="toggleTodasTelas(true)">Todas</mat-button-toggle>
-                    <mat-button-toggle *ngFor="let tela of telas" value="{{tela.numero}}" (click)="toggleTodasTelas(false)">Tela {{tela.numero}}</mat-button-toggle>
+                    <mat-button-toggle *ngFor="let tela of telas" value="{{tela.numero}}">Tela {{tela.numero}}</mat-button-toggle>
                 </mat-button-toggle-group>  
             </div>
         </form>                                 
