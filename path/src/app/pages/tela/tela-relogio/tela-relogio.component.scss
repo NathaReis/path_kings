@@ -1,6 +1,9 @@
 .tempo {
+    width: 100dvw;
+    height: 80dvh;
     display: flex;
-    place-items: center;
+    align-items: center;
+    justify-content: center;
     gap: 20px;
     color: transparent;
     letter-spacing: 15px;
@@ -23,16 +26,12 @@
 }
 
 .clima {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 200px;
-    width: 100vw;
-    display: grid;
+    width: 100dvw;
+    height: 20dvh;
+    display: flex;
     align-items: center;
     justify-content: center;
-    place-items: center;
-    color: #fff;
+    color: var(--color2);
 }
 
 .clima h1 {
@@ -43,4 +42,10 @@
     display: grid;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-height: 270px) {
+    .clima {
+        display: none;
+    }
 }
