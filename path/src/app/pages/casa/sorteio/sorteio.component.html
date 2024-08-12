@@ -7,7 +7,7 @@
                 <button mat-fab [disabled]="myForm.invalid || telas.length <= 0">
                     <mat-icon>sync</mat-icon>
                 </button>
-                <button mat-fab color="warn">
+                <button mat-fab color="warn" [disabled]="!bloquearForm">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
@@ -16,6 +16,7 @@
                 <mat-form-field class="inputNumero">
                     <mat-label>Inicial</mat-label>
                     <input 
+                    [disabled]="bloquearForm"
                     name="numeroInicial"
                     [(ngModel)]="numeroInicial"
                     type="number" 
@@ -26,6 +27,7 @@
                 <mat-form-field class="inputNumero">
                     <mat-label>Final</mat-label>
                     <input 
+                    [disabled]="bloquearForm"
                     name="numeroFinal"
                     [(ngModel)]="numeroFinal"
                     type="number" 
@@ -34,6 +36,7 @@
                 </mat-form-field>
 
                 <mat-button-toggle-group *ngIf="telas.length > 0" 
+                    [disabled]="bloquearForm"
                     class="buttonToggleBox"  
                     name="telas" 
                     [(ngModel)]="telaSelecionada" 
@@ -51,7 +54,7 @@
 
         </div>
         <div class="resultadoAtual">
-
+            {{ numeroAtual }}
         </div>
     </body>
 </path-container>

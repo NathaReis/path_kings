@@ -10,11 +10,14 @@ import { TelaService } from 'src/app/services/tela.service';
   styleUrls: ['./sorteio.component.scss']
 })
 export class SorteioComponent implements OnInit {
-  telaSelecionada: string[] = [];
   telas: Tela[] = [];
+  telaSelecionada: string[] = [];
   numeroInicial: number = 0;
   numeroFinal: number = 0;
+  bloquearForm: boolean = false;
   numerosSorteados: number[] = [];
+  numeros: number[] = [];
+  numeroAtual: number = 0;
 
   constructor(private telaService: TelaService) { }
 
@@ -22,7 +25,21 @@ export class SorteioComponent implements OnInit {
     this.telas = this.telaService.buscar();
   }
 
+  sortear(): void {
+    const tempoAleatorio = Math.floor(Math.random() * (1000 - 300 + 1)) + 300;
+    let countMilissegundos = 0;
+    this.numeroAtual = 0;
+    const sorteio = setInterval(() => {
+      this.numeroAtual++
+      countMilissegundos++;
+      if(countMilissegundos == tempoAleatorio) {
+        clearInterval(sorteio);
+      }
+    },1);
+  }
+
   onSubmit(form: any): void {
-    console.log(form.value);
+    this.bloquearForm = true;
+    this.sortear();
   }
 }

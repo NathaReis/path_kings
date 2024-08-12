@@ -66,6 +66,11 @@
     width: calc(100vw - 350px);
     height: calc(100dvh - 180px);
     background: var(--color1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    cursor: default;
 }
 
 .float:hover {

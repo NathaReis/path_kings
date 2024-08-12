@@ -29,6 +29,9 @@ form {
 }
 
 .status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,12 +39,15 @@ form {
 }
 
 .card {
+    cursor: default;
     width: 100px;
     height: 100px;
     display: grid;
     align-items: center;
     justify-content: center;
     text-align: center;
-    border: .5px dashed var(--color5);
+    border: .5px dashed #0d0d0d;
+    background: transparent;
     border-radius: 5px;
+    color: #0d0d0d;
 }

@@ -34,10 +34,23 @@ header a:hover {
     color: var(--color4);
 }
 
+.favicon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(90deg, transparent, var(--color5)), url(../../assets/icons/2.png);
+    background-size: 65px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}
+
 header .logo {
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 70px;
     padding: 0 70px 0 30px;
     border-radius: 0 35px 35px 0;
 }

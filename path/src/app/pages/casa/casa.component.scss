@@ -121,13 +121,12 @@ section .aba .fechar:hover {
 section .tela {
     width: 235px;
     height: 155px;
-    background: #eee3;
+    background: #0001;
     display: grid;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    color: #fff;
-    text-transform: uppercase;
+    color: #000000;
 }
 
 section:nth-child(1) .tela {
