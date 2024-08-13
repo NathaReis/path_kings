@@ -4,10 +4,10 @@
 
         <form class="float controles" #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
             <div class="interacao">
-                <button mat-fab [disabled]="myForm.invalid || telas.length <= 0">
+                <button type="submit" mat-fab [disabled]="myForm.invalid || telas.length <= 0">
                     <mat-icon>sync</mat-icon>
                 </button>
-                <button mat-fab color="warn" [disabled]="!bloquearForm">
+                <button type="button" mat-fab color="warn" [disabled]="!bloquearForm" (click)="resetarForm()">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
@@ -48,10 +48,16 @@
 
 
         <div class="float numeros">
-
+            <section *ngFor="let numero of numeros">
+                <mat-checkbox id="check_{{numero}}">
+                    <div class="numeroLista">{{ numero }}</div>
+                </mat-checkbox>
+            </section>
         </div>
         <div class="float historico">
-
+            <section *ngFor="let numeroSor of numerosSorteados">
+                <div class="numeroLista">{{ numeroSor }}</div>
+            </section>
         </div>
         <div class="resultadoAtual">
             {{ numeroAtual }}

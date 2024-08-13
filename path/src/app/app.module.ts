@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,6 +46,7 @@ import { SorteioComponent } from './pages/casa/sorteio/sorteio.component';
     MatRadioModule,
     MatButtonModule,
     MatSlideToggleModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

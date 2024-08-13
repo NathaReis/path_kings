@@ -47,6 +47,20 @@
     height: calc(100dvh - 150px);
     background: var(--color4);
     border-radius: 10px 0 100px 100px;
+    overflow: hidden auto;
+    padding: 10px 0 70px;
+}
+
+.numeros::-webkit-scrollbar {
+    display: none;
+}
+
+.numeroLista {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.329);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px;
 }
 
 .historico {
@@ -57,6 +71,9 @@
     height: calc(100dvh - 210px);
     background: var(--color2);
     border-radius: 0 0 40px 40px;
+    text-align: right;
+    overflow: hidden auto;
+    padding: 10px 0 70px;
 }
 
 .resultadoAtual {
