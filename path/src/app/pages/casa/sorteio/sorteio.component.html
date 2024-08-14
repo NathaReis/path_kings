@@ -4,7 +4,7 @@
 
         <form class="float controles" #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
             <div class="interacao">
-                <button type="submit" mat-fab [disabled]="myForm.invalid || telas.length <= 0">
+                <button type="submit" mat-fab [disabled]="myForm.invalid || telas.length <= 0 || sorteando">
                     <mat-icon>sync</mat-icon>
                 </button>
                 <button type="button" mat-fab color="warn" [disabled]="!bloquearForm" (click)="resetarForm()">
@@ -49,7 +49,7 @@
 
         <div class="float numeros">
             <section *ngFor="let numero of numeros">
-                <mat-checkbox id="check_{{numero}}">
+                <mat-checkbox id="check_{{numero}}" [checked]="numerosSorteados.includes(numero)" (change)="transferirNumero(numero)">
                     <div class="numeroLista">{{ numero }}</div>
                 </mat-checkbox>
             </section>

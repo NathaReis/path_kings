@@ -76,6 +76,10 @@
     padding: 10px 0 70px;
 }
 
+.historico::-webkit-scrollbar {
+    display: none;
+}
+
 .resultadoAtual {
     position: absolute;
     top: 110px;
@@ -94,4 +98,52 @@
     box-shadow: 0 0 0 2px var(--color3), 0 0 20px var(--color3), 0 0 50px var(--color3);
     z-index: 2000;
     transition: .3s;
+}
+
+@media (max-width: 1300px) {
+    .controles {
+        width: calc(100vw - 220px);
+        border-radius: 0 30px 30px 0;
+    }
+    .interacao {
+        width: 20%;
+    }
+    .configuracao {
+        width: 80%;
+    }
+    input, mat-form-field { 
+        width: 70px;
+    }
+    button {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 800px) {
+    .controles {
+        width: calc(100vw - 200px);
+    }
+    .interacao {
+        gap: 10px;
+    }
+    
+    .configuracao {
+        right: 20px;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 700px) {
+    .controles {
+        border-radius: 0;
+    }
+    .interacao {
+        gap: 5px;
+    }
+    
+    .configuracao {
+        right: 10px;
+        gap: 5px;
+    }
 }

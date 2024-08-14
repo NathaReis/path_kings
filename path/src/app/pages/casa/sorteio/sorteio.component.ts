@@ -16,9 +16,11 @@ export class SorteioComponent implements OnInit {
   numeroFinal: number = 2;
   bloquearForm: boolean = false;
   numerosSorteados: number[] = [];
+  numerosNaoSorteados: number[] = [];
   numeros: number[] = [];
   numeroAtual: number = 0;
   posicaoAtual: number = 0;
+  sorteando: boolean = false;
 
   constructor(private telaService: TelaService) { }
 
@@ -34,40 +36,56 @@ export class SorteioComponent implements OnInit {
 
   listarNumeros(): void {
     for(let i = this.numeroInicial; i <= this.numeroFinal; i++) {
+      this.numerosNaoSorteados.push(i);
       this.numeros.push(i);
     }
   }
 
+  transferirNumero(numero: number) {
+    const numeroSorteado = this.numerosSorteados.includes(numero);
+    if(numeroSorteado) {
+      this.numerosSorteados = this.numerosSorteados.filter((num: number) => num != numero);
+      this.numerosNaoSorteados.push(numero);
+      this.numerosNaoSorteados.sort((a,b) => a < b ? -1 : 1);
+    }
+    else {
+      this.numerosNaoSorteados = this.numerosNaoSorteados.filter((num: number) => num != numero);
+      this.numerosSorteados.push(numero);
+      this.numerosSorteados.sort((a,b) => a < b ? -1 : 1); 
+    }
+  }
+
   sortear(): void {
-    const tempoAleatorio = Math.floor(Math.random() * (1000 - 300 + 1)) + 300;
+    const tempoAleatorio = Math.floor(Math.random() * (500 - 50 + 1)) + 50;
     let countMilissegundos = 0;
     
-    if(this.numeros.length > 1) {
+    if(this.numerosNaoSorteados.length > 1) {
+      this.sorteando = true;
       const sorteio = setInterval(() => {
         this.posicaoAtual++;// Sortear
-  
-        console.log(this.posicaoAtual);
-        
-        if(this.posicaoAtual > this.numeros.length - 1) {
+          
+        if(this.posicaoAtual > this.numerosNaoSorteados.length - 1) {
           this.posicaoAtual = 0;
         }// Voltar para o início
   
-        this.numeroAtual = this.numeros[this.posicaoAtual];
+        this.numeroAtual = this.numerosNaoSorteados[this.posicaoAtual];
   
         countMilissegundos++;
         if(countMilissegundos == tempoAleatorio) {
           clearInterval(sorteio);
+          this.sorteando = false;
         }// Parar sorteio
-      },1);
+      },10);
   
       this.numerosSorteados.push(this.numeroAtual);
-      this.numeros = this.numeros.filter((num: number) => num != this.numeroAtual);
+      this.numerosNaoSorteados = this.numerosNaoSorteados.filter((num: number) => num != this.numeroAtual);
     }
-    else if(this.numeros.length == 1) {
-      this.numeroAtual = this.numeros[0];
+    else if(this.numerosNaoSorteados.length == 1) {
+      this.numeroAtual = this.numerosNaoSorteados[0];
       this.numerosSorteados.push(this.numeroAtual);
-      this.numeros = [];
+      this.numerosNaoSorteados = [];
     }
+    this.numerosSorteados.sort((a,b) => a < b ? -1 : 1);
   }
 
   resetarForm(): void {
@@ -76,15 +94,20 @@ export class SorteioComponent implements OnInit {
     this.numeroInicial = 1;
     this.numeroFinal = 2;
     this.bloquearForm = false;
-    this.numeros = [];
+    this.numerosNaoSorteados = [];
     this.numerosSorteados = [];
     this.telaSelecionada = [];
+    this.numeros = [];
   }
 
   onSubmit(form: any): void {
-    if(this.formValid()) {
+    if(this.formValid() && !this.sorteando) {
+      this.numerosSorteados.sort((a,b) => a < b ? -1 : 1);
+      this.numeros.sort((a,b) => a < b ? -1 : 1);
+      this.numerosNaoSorteados.sort((a,b) => a < b ? -1 : 1);
+
       this.bloquearForm = true;
-      const primeiraVez = this.numeros.length <= 0 && this.numerosSorteados.length <= 0;
+      const primeiraVez = this.numerosNaoSorteados.length <= 0 && this.numerosSorteados.length <= 0;
 
       if(primeiraVez) {
         this.listarNumeros();
