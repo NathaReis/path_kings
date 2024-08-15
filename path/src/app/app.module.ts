@@ -21,6 +21,7 @@ import { HeaderComponent } from './templates/header/header.component';
 import { ContainerComponent } from './templates/container/container.component';
 import { TelaTempoComponent } from './pages/tela/tela-tempo/tela-tempo.component';
 import { SorteioComponent } from './pages/casa/sorteio/sorteio.component';
+import { TelaSorteioComponent } from './pages/tela/tela-sorteio/tela-sorteio.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SorteioComponent } from './pages/casa/sorteio/sorteio.component';
     ContainerComponent,
     TelaTempoComponent,
     SorteioComponent,
+    TelaSorteioComponent,
   ],
   imports: [
     BrowserModule,

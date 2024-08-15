@@ -14,6 +14,7 @@ export class ContainerComponent implements OnInit {
   @Input() background: string = 'padrao';
   @Input() monitor: string = 'false';
   @Output() tempo = new EventEmitter<string>();
+  @Output() sorteio = new EventEmitter<string>();
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +32,12 @@ export class ContainerComponent implements OnInit {
       const chave = event.key;
       const novoValor = event.newValue;
       const velhoValor = event.oldValue;
+      const telaUrl = this.router.url.slice(0,-1);
+      let id: string = '';
+  
+      this.route.params.subscribe((params: any) => {
+        id = String(params["id"]);
+      });// Busca id
 
       if(this.monitor == 'true') {
         if(chave === 'tema') {
@@ -43,13 +50,6 @@ export class ContainerComponent implements OnInit {
           html?.classList.add(tema);
         }
         if(chave === 'tela') {
-          const telaUrl = this.router.url.slice(0,-1);
-          let id: string = '';
-  
-          this.route.params.subscribe((params: any) => {
-            id = String(params["id"]);
-          });// Busca id
-  
           const valores = novoValor?.split(",");
           if(valores) {
             this.telaService.eventosLocalStorage(valores, id, telaUrl, this.router);      
@@ -68,6 +68,14 @@ export class ContainerComponent implements OnInit {
             const horario = valores[ultimoIndex];
 
             this.tempo.emit(horario);
+          }
+        }
+        if(chave === 'sorteio') {
+          const splitValor = novoValor?.split(",");
+          const ids = splitValor?.slice(0,splitValor.length - 1);
+          if(ids?.includes(id) && splitValor) {  
+            const numero = splitValor?.pop();  
+            this.sorteio.emit(numero);
           }
         }
       }

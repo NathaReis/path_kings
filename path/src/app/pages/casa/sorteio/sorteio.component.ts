@@ -74,7 +74,8 @@ export class SorteioComponent implements OnInit {
         }// Voltar para o início
   
         this.numeroAtual = this.numerosNaoSorteados[this.posicaoAtual];
-  
+        localStorage.setItem("sorteio", `${this.telaSelecionada},${this.numeroAtual}`);
+
         countMilissegundos++;
         if(countMilissegundos == tempoAleatorio) {
           clearInterval(sorteio);
@@ -95,6 +96,7 @@ export class SorteioComponent implements OnInit {
 
   resetarForm(): void {
     this.numeroAtual = 0;
+    localStorage.setItem("sorteio", `${this.telaSelecionada},${this.numeroAtual}`);
     this.posicaoAtual = 0;
     this.numeroInicial = 1;
     this.numeroFinal = 2;
