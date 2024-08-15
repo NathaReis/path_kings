@@ -28,6 +28,11 @@ export class SorteioComponent implements OnInit {
     this.telas = this.telaService.buscar();
   }
 
+  navegar(): void {
+    const numeros = this.telaSelecionada.map((el: string) => Number(el));
+    this.telaService.navegar('sorteio',numeros);
+  }
+
   formValid(): boolean {
     const numeros = this.numeroFinal > this.numeroInicial && this.numeroInicial > 0;
     const tela = this.telaSelecionada.length > 0;
@@ -110,7 +115,9 @@ export class SorteioComponent implements OnInit {
       const primeiraVez = this.numerosNaoSorteados.length <= 0 && this.numerosSorteados.length <= 0;
 
       if(primeiraVez) {
+        this.navegar();
         this.listarNumeros();
+
         setTimeout(() => {
           this.sortear();
         },500);

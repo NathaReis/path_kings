@@ -12,6 +12,42 @@ export class TelaService {
   configuracaoOpenTela: string = `toolbar=yes,location=yes,directories=no, status=no, menubar=yes,scrollbars=yes, resizable=no,copyhistory=yes, width=500px,height=500px`;
   
   constructor(readonly iconeRotaService: IconeRotaService) { }
+  
+  private ordenarLista(lista: Tela[]): Tela[] {
+    return lista.sort((a:Tela,b:Tela) => a.numero > b.numero ? 1 : -1);
+  }
+
+  private excluirTelaLista(numero: number): Tela[] {
+    this.listaTelas = this.ordenarLista(this.listaTelas); // A exclusão só é bem sucedida com telas ordenadas.
+    let novaLista: Tela[] = this.listaTelas.filter(el => {
+      if(el.numero !== numero) {
+        if(el.numero < numero) {
+          return el;
+        }
+        localStorage.setItem("tela", `${el.numero},decrementoId`);// Envia comando para decrementar id da tela
+        el.numero--;
+        return el;
+      }// Remove tela da lista
+      return
+    });
+    return novaLista;
+  }
+
+  private registrarSessionStorage(): void {
+    if(this.listaTelas.length > 0) {
+      const numeros = this.listaTelas.map(el => el.numero);// Busca os números das telas
+      const icones = this.listaTelas.map(el => el.icone);// Busca as rotas/icones das telas
+
+      const numerosStr = numeros.join(",");// Transforma eles em uma array
+      const iconesStr = icones.join(",");
+
+      sessionStorage.setItem("numeros", numerosStr); // Registra na sessão
+      sessionStorage.setItem("icones", iconesStr); 
+      return;
+    }
+    sessionStorage.removeItem("numeros");// Se não existir lista, exclui a sessão
+    sessionStorage.removeItem("icones");
+  }
 
   buscar(): Tela[] {
     const sessionNumeros = sessionStorage.getItem("numeros");
@@ -31,26 +67,6 @@ export class TelaService {
 
     }
     return this.listaTelas;
-  }
-
-  ordenarLista(lista: Tela[]): Tela[] {
-    return lista.sort((a:Tela,b:Tela) => a.numero > b.numero ? 1 : -1);
-  }
-
-  excluirTelaLista(numero: number): Tela[] {
-    this.listaTelas = this.ordenarLista(this.listaTelas); // A exclusão só é bem sucedida com telas ordenadas.
-    let novaLista: Tela[] = this.listaTelas.filter(el => {
-      if(el.numero !== numero) {
-        if(el.numero < numero) {
-          return el;
-        }
-        localStorage.setItem("tela", `${el.numero},decrementoId`);// Envia comando para decrementar id da tela
-        el.numero--;
-        return el;
-      }// Remove tela da lista
-      return
-    });
-    return novaLista;
   }
 
   fechar(numero: number): Tela[] {
@@ -93,22 +109,6 @@ export class TelaService {
     numeros.map((numero: number) => {
       localStorage.setItem("tela", `${numero},recarregar`);// Envia comando para recarregar tela
     });
-  }
-
-  registrarSessionStorage(): void {
-    if(this.listaTelas.length > 0) {
-      const numeros = this.listaTelas.map(el => el.numero);// Busca os números das telas
-      const icones = this.listaTelas.map(el => el.icone);// Busca as rotas/icones das telas
-
-      const numerosStr = numeros.join(",");// Transforma eles em uma array
-      const iconesStr = icones.join(",");
-
-      sessionStorage.setItem("numeros", numerosStr); // Registra na sessão
-      sessionStorage.setItem("icones", iconesStr); 
-      return;
-    }
-    sessionStorage.removeItem("numeros");// Se não existir lista, exclui a sessão
-    sessionStorage.removeItem("icones");
   }
 
   eventosLocalStorage(resultado: any, id: string, telaUrl: string, router: Router): void {

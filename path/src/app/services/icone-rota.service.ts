@@ -12,6 +12,8 @@ export class IconeRotaService {
         return 'timer';
       case 'tela':
         return 'villa';
+      case 'sorteio':
+        return 'casino';
       default: 
         return 'tv';
     }
