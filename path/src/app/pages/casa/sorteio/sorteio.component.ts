@@ -26,11 +26,39 @@ export class SorteioComponent implements OnInit {
 
   ngOnInit(): void {
     this.telas = this.telaService.buscar();
+    this.recuperarEstadoAtual();
   }
 
   navegar(): void {
     const numeros = this.telaSelecionada.map((el: string) => Number(el));
     this.telaService.navegar('sorteio',numeros);
+  }
+
+  salvarEstadoAtual(): void {
+    sessionStorage.setItem("telas_sorteio", `${this.telaSelecionada.join(",")}`);
+    sessionStorage.setItem("numeros_sorteio", `${this.numeros.join(",")}`);
+    sessionStorage.setItem("numerosNaoSorteados_sorteio", `${this.numerosNaoSorteados.join(",")}`);
+    sessionStorage.setItem("numerosSorteados_sorteio", `${this.numerosSorteados.join(",")}`);
+  }
+
+  recuperarEstadoAtual(): void {
+    const t = sessionStorage.getItem("telas_sorteio");
+    const n = sessionStorage.getItem("numeros_sorteio");
+    const nNS = sessionStorage.getItem("numerosNaoSorteados_sorteio");
+    const nS = sessionStorage.getItem("numerosSorteados_sorteio");
+    const possuiSession = t && n && nNS && nS;
+    const primeiraVez = this.numerosNaoSorteados.length <= 0 && this.numerosSorteados.length <= 0;
+    
+    if(possuiSession && primeiraVez) {
+      this.bloquearForm = true;
+
+      this.telaSelecionada = t.split(",");
+      this.numeros = n.split(",").map((num: string) => +num);
+      this.numerosNaoSorteados = nNS.split(",").map((num: string) => +num);
+      this.numerosSorteados = nS.split(",").map((num: string) => +num);
+      this.numeroInicial = this.numeros[0];
+      this.numeroFinal = this.numeros.unshift();
+    }
   }
 
   formValid(): boolean {
@@ -60,6 +88,14 @@ export class SorteioComponent implements OnInit {
     }
   }
 
+  ordenarListas() : void {
+    this.numerosSorteados = this.numerosSorteados.filter((num: number) => num != 0);
+    this.numerosNaoSorteados = this.numerosNaoSorteados.filter((num: number) => num != 0);
+
+    this.numerosSorteados.sort((a,b) => a < b ? -1 : 1); 
+    this.numerosNaoSorteados.sort((a,b) => a < b ? -1 : 1);
+  }
+
   sortear(): void {
     const tempoAleatorio = Math.floor(Math.random() * (500 - 50 + 1)) + 50;
     let countMilissegundos = 0;
@@ -85,13 +121,14 @@ export class SorteioComponent implements OnInit {
   
       this.numerosSorteados.push(this.numeroAtual);
       this.numerosNaoSorteados = this.numerosNaoSorteados.filter((num: number) => num != this.numeroAtual);
+      this.salvarEstadoAtual();
     }
     else if(this.numerosNaoSorteados.length == 1) {
       this.numeroAtual = this.numerosNaoSorteados[0];
       this.numerosSorteados.push(this.numeroAtual);
       this.numerosNaoSorteados = [];
     }
-    this.numerosSorteados.sort((a,b) => a < b ? -1 : 1);
+    this.ordenarListas();
   }
 
   resetarForm(): void {
