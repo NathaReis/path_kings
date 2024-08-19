@@ -16,7 +16,7 @@
                 <mat-form-field class="inputNumero">
                     <mat-label>Inicial</mat-label>
                     <input 
-                    [disabled]="bloquearForm"
+                    [disabled]="bloquearForm || telas.length <= 0 "
                     name="numeroInicial"
                     [(ngModel)]="numeroInicial"
                     type="number" 
@@ -27,7 +27,7 @@
                 <mat-form-field class="inputNumero">
                     <mat-label>Final</mat-label>
                     <input 
-                    [disabled]="bloquearForm"
+                    [disabled]="bloquearForm || telas.length <= 0 "
                     name="numeroFinal"
                     [(ngModel)]="numeroFinal"
                     type="number" 
