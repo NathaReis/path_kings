@@ -1,24 +1,27 @@
 #medias {
     width: 100dvw;
-    height: 100px;
+    height: 140px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     list-style: none;
+    background: var(--color1);
+    padding: 10px;
 }
 
 #medias label {
-    width: calc(100dvw / 4);
+    width: calc(100dvw / 5);
     height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     font-size: 1.2rem;
-    border: .4px solid #000;
-    background: var(--color1);
-    color: var(--color5);
+    background: var(--color2);
+    color: var(--color1);
     cursor: pointer;
+    border-left: 20px solid #12253f;
+    border-radius: 5px 0 0 5px;
 }
 
 #medias label:hover {
@@ -29,20 +32,30 @@ input {
     display: none;
 }
 
-#telas {
+#controles {
     position: absolute;
-    bottom: 20px;
-    left: 0;
-    width: 100dvw;
-    height: 50dvh;
-    display: flex;
+    bottom: 10px;
+    left: 10px;
+    width: 600px;
+    height: calc(100dvh - 230px);
+    border: 1px solid var(--color5);
+    border-radius: 20px;
+    display: grid;
     align-items: center;
-    justify-content: space-evenly;
 }
 
-#telas .card {
-    width: calc(100dvw / 4);
-    height: 40dvh;
-    box-shadow: 0 0 0 2px #141414, 0 0 10px #0005, 0 0 50px #0003;
-    border-radius: 10px;
+#controles legend {
+    font-size: 1.4rem;
+    margin-left: 25px;
+    letter-spacing: 4px;
+    padding: 20px;
+    text-shadow: 0 0 5px #0002;
+}
+
+#controles .controle {
+    width: 600px;
+    height: calc((100dvh - 230px) / 4);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }

@@ -11,7 +11,7 @@ import { TemaService } from 'src/app/services/tema.service';
   styleUrls: ['./container.component.scss']
 })
 export class ContainerComponent implements OnInit {
-  @Input() background: string = 'padrao';
+  @Input() background: string = 'cor3';
   @Input() monitor: string = 'false';
   @Output() tempo = new EventEmitter<string>();
   @Output() sorteio = new EventEmitter<string>();

@@ -27,15 +27,25 @@
                 </label>
             </li>
         </ul>
-        <input type="file" id="video" accept=".mp4, .webm">
-        <input type="file" id="imagem" accept=".jpeg, .jpg, .png, .webp">
-        <input type="file" id="audio" accept=".mp3, .wav">
-        <input type="file" id="powerpoint" accept=".pptx, application/vnd.ms-powerpoint">
+        <input type="file" [multiple]="false" id="video" accept=".mp4, .webm">
+        <input type="file" [multiple]="false" id="imagem" accept=".jpeg, .jpg, .png, .webp">
+        <input type="file" [multiple]="false" id="audio" accept=".mp3, .wav">
+        <input type="file" [multiple]="false" id="powerpoint" accept=".pptx, application/vnd.ms-powerpoint">
 
-        <div id="telas">
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
-        </div>
+        <fieldset id="controles">
+            <legend>CONTROLES</legend>
+            <div class="controle video">
+
+            </div>
+            <div class="controle imagem">
+
+            </div>
+            <div class="controle audio">
+
+            </div>
+            <div class="controle powerpoint">
+
+            </div>
+        </fieldset>
     </body>
 </path-container>

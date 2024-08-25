@@ -7,7 +7,7 @@ header ul {
     align-items: center;
     list-style: none;
     font-size: 1.2rem;
-    background: var(--color5);
+    background: #12253f;
     box-shadow: 0 0 10px #00000038;
 }
 
@@ -31,7 +31,16 @@ header a {
 }
 header a:hover {
     background: var(--color2);
-    color: var(--color4);
+    color: var(--color1);
+}
+
+#tema {
+    display: none;
+}
+
+#label-tema {
+    cursor: pointer;
+    color: var(--color1);
 }
 
 .favicon {
@@ -40,7 +49,7 @@ header a:hover {
     left: 0;
     width: 70px;
     height: 70px;
-    background: linear-gradient(90deg, transparent, var(--color5)), url(../../assets/icons/2.png);
+    background: linear-gradient(90deg, transparent, #12253f), url(../../assets/icons/2.png);
     background-size: 65px;
     background-position: center;
     background-repeat: no-repeat;

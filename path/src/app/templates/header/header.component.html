@@ -16,16 +16,12 @@
           </button> 
         </li>
         <li class="temas">
-          <mat-slide-toggle [(ngModel)]="temaClaro" (change)="configTema()">
-            <p>
-              Claro
-            </p>
-          </mat-slide-toggle>
-          <mat-slide-toggle [(ngModel)]="temaColorido" (change)="configTema()">
-            <p>
-              Cor
-            </p>
-          </mat-slide-toggle>
+          <input type="checkbox" id="tema" [(ngModel)]="temaClaro" (change)="configTema()">
+          <label for="tema" id="label-tema">
+            <mat-icon>
+                {{ temaClaro ? 'brightness_high' : 'nightlight' }}
+            </mat-icon>
+          </label>    
         </li>
       </ul>
     </nav>

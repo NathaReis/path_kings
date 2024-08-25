@@ -34,14 +34,7 @@ export class HeaderComponent implements OnInit {
   }
 
   configTema(): void {
-    let tema = 
-    this.temaClaro ? 
-      this.temaColorido ? 
-        'classicRosa' : 
-        'claro' : 
-      this.temaColorido ? 
-        'classicAzul' : 
-        'escuro';
+    let tema = this.temaClaro ? 'claro' : 'escuro';
     this.temaService.configTema(tema);
   }
 }
