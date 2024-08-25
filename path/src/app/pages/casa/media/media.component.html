@@ -1,0 +1,41 @@
+<path-container>
+    <path-header></path-header>
+    <body>
+        <ul id="medias">
+            <li>
+                <label for="video">
+                    <mat-icon>movie</mat-icon>
+                    Vídeo
+                </label>
+            </li>
+            <li>
+                <label for="imagem">
+                    <mat-icon>image</mat-icon>
+                    Imagem
+                </label>
+            </li>
+            <li>
+                <label for="audio">
+                    <mat-icon>music_note</mat-icon>
+                    Áudio
+                </label>
+            </li>
+            <li>
+                <label for="powerpoint">
+                    <mat-icon>skip_next</mat-icon>
+                    PowerPoint
+                </label>
+            </li>
+        </ul>
+        <input type="file" id="video" accept=".mp4, .webm">
+        <input type="file" id="imagem" accept=".jpeg, .jpg, .png, .webp">
+        <input type="file" id="audio" accept=".mp3, .wav">
+        <input type="file" id="powerpoint" accept=".pptx, application/vnd.ms-powerpoint">
+
+        <div id="telas">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </div>
+    </body>
+</path-container>

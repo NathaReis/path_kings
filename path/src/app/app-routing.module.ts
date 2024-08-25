@@ -8,12 +8,15 @@ import { TelaRelogioComponent } from './pages/tela/tela-relogio/tela-relogio.com
 import { TelaTempoComponent } from './pages/tela/tela-tempo/tela-tempo.component';
 import { SorteioComponent } from './pages/casa/sorteio/sorteio.component';
 import { TelaSorteioComponent } from './pages/tela/tela-sorteio/tela-sorteio.component';
+import { MediaComponent } from './pages/casa/media/media.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'casa', pathMatch: 'full'},
   {path: 'casa', component: CasaComponent},
   {path: 'casa/relogio', component: RelogioComponent},
   {path: 'casa/sorteio', component: SorteioComponent},
+  {path: 'casa/media', component: MediaComponent},
+
   {path: 'tela/:id', component: TelaComponent},
   {path: 'tela/relogio/:id', component: TelaRelogioComponent},
   {path: 'tela/tempo/:id', component: TelaTempoComponent},

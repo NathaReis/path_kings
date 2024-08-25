@@ -14,6 +14,8 @@ export class IconeRotaService {
         return 'villa';
       case 'sorteio':
         return 'casino';
+      case 'media':
+        return 'audiotrack';
       default: 
         return 'tv';
     }

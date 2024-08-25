@@ -24,6 +24,11 @@ export class HeaderService {
       nome: 'sorteio',
       rota: '/casa/sorteio',
       icon: 'casino'
+    },
+    {
+      nome: 'media',
+      rota: '/casa/media',
+      icon: 'audiotrack'
     }
   ]
 
