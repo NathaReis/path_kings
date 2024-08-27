@@ -10,7 +10,7 @@ div {
 }
 
 .padrao {
-    background: linear-gradient(45deg, var(--color1), var(--color2));
+    background: var(--color4);
 }
 
 .cor1 {
@@ -27,8 +27,4 @@ div {
 
 .cor4 {
     background: var(--color4);
-}
-
-.cor5 {
-    background: var(--color5);
 }

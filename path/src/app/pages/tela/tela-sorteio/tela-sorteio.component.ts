@@ -8,7 +8,9 @@ import { Component } from '@angular/core';
 export class TelaSorteioComponent {
   numero: string = '00';
   receberValor(sorteio: string) {
-    this.numero = sorteio;
-    this.numero = +this.numero < 10 ? `0${this.numero}` : this.numero;
+    if(sorteio != undefined) {
+      this.numero = sorteio;
+      this.numero = +this.numero < 10 ? `0${this.numero}` : this.numero;
+    }
   }
 }

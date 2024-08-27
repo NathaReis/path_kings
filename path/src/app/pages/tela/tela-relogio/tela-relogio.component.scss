@@ -11,8 +11,7 @@
     font-weight: 700;
     font-family: Arial, Helvetica, sans-serif;
     -webkit-text-stroke-width: 4px;
-    -webkit-text-stroke-color: #ddd;
-    text-shadow: 0 0 10px #0003;
+    -webkit-text-stroke-color: var(--info);
 }
 
 .tempo p {
@@ -34,7 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: left;
-    color: var(--color2);
+    color: var(--info);
     background: transparent;
     box-shadow: 0 0 0 5px #0002;
 }

@@ -1,32 +1,6 @@
 <path-container>
     <path-header></path-header>
     <body>
-        <ul id="medias">
-            <li>
-                <label for="video">
-                    <mat-icon>movie</mat-icon>
-                    Vídeo
-                </label>
-            </li>
-            <li>
-                <label for="imagem">
-                    <mat-icon>image</mat-icon>
-                    Imagem
-                </label>
-            </li>
-            <li>
-                <label for="audio">
-                    <mat-icon>music_note</mat-icon>
-                    Áudio
-                </label>
-            </li>
-            <li>
-                <label for="powerpoint">
-                    <mat-icon>skip_next</mat-icon>
-                    PowerPoint
-                </label>
-            </li>
-        </ul>
         <input type="file" [multiple]="false" id="video" accept=".mp4, .webm">
         <input type="file" [multiple]="false" id="imagem" accept=".jpeg, .jpg, .png, .webp">
         <input type="file" [multiple]="false" id="audio" accept=".mp3, .wav">
@@ -45,6 +19,77 @@
             </div>
             <div class="controle powerpoint">
 
+            </div>
+        </fieldset>
+
+        <fieldset id="medias">
+            <nav>
+                <ul>
+                    <li class="navMedia" id="video" (click)="navMidia('video')">
+                        Video
+                    </li>
+                    <li class="navMedia" id="imagem" (click)="navMidia('imagem')">
+                        Imagem
+                    </li>
+                    <li class="navMedia" id="audio" (click)="navMidia('audio')">
+                        Áudio
+                    </li>
+                    <li class="navMedia" id="powerpoint" (click)="navMidia('powerpoint')">
+                        Power Point
+                    </li>
+                </ul>
+            </nav>
+            <div class="media video" *ngIf="listaAtual == 'video'">
+                <button mat-mini-fab class="upload">
+                    <mat-icon>upload</mat-icon>
+                </button>
+
+                <mat-selection-list #video class="list">
+                    <mat-list-option *ngFor="let video of videos">{{video.nome}}</mat-list-option>
+                </mat-selection-list>
+                
+                <p class="itemsSelected">
+                    Mídias selecionadas: {{video.selectedOptions.selected.length}}
+                </p>
+            </div>
+            <div class="media imagem" *ngIf="listaAtual == 'imagem'">
+                <button mat-mini-fab class="upload">
+                    <mat-icon>upload</mat-icon>
+                </button>
+                
+                <mat-selection-list #imagem class="list">
+                    <mat-list-option *ngFor="let imagem of imagens">{{imagem.nome}}</mat-list-option>
+                </mat-selection-list>
+                
+                <p class="itemsSelected">
+                    Mídias selecionadas: {{imagem.selectedOptions.selected.length}}
+                </p>
+            </div>
+            <div class="media audio" *ngIf="listaAtual == 'audio'">
+                <button mat-mini-fab class="upload">
+                    <mat-icon>upload</mat-icon>
+                </button>
+                
+                <mat-selection-list #audio class="list">
+                    <mat-list-option *ngFor="let audio of audios">{{audio.nome}}</mat-list-option>
+                </mat-selection-list>
+                
+                <p class="itemsSelected">
+                    Mídias selecionadas: {{audio.selectedOptions.selected.length}}
+                </p>
+            </div>
+            <div class="media powerpoint" *ngIf="listaAtual == 'powerpoint'">
+                <button mat-mini-fab class="upload">
+                    <mat-icon>upload</mat-icon>
+                </button>
+                
+                <mat-selection-list #powerpoint class="list">
+                    <mat-list-option *ngFor="let powerpoint of powerpoints">{{powerpoint.nome}}</mat-list-option>
+                </mat-selection-list>
+                
+                <p class="itemsSelected">
+                    Mídias selecionadas: {{powerpoint.selectedOptions.selected.length}}
+                </p>
             </div>
         </fieldset>
     </body>

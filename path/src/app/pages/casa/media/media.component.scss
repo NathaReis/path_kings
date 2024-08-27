@@ -1,33 +1,3 @@
-#medias {
-    width: 100dvw;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    list-style: none;
-    background: var(--color1);
-    padding: 10px;
-}
-
-#medias label {
-    width: calc(100dvw / 5);
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 1.2rem;
-    background: var(--color2);
-    color: var(--color1);
-    cursor: pointer;
-    border-left: 20px solid #12253f;
-    border-radius: 5px 0 0 5px;
-}
-
-#medias label:hover {
-    opacity: .7;
-}
-
 input {
     display: none;
 }
@@ -37,7 +7,7 @@ input {
     bottom: 10px;
     left: 10px;
     width: 600px;
-    height: calc(100dvh - 230px);
+    height: calc(100dvh - 100px);
     border: 1px solid var(--color5);
     border-radius: 20px;
     display: grid;
@@ -47,9 +17,9 @@ input {
 #controles legend {
     font-size: 1.4rem;
     margin-left: 25px;
-    letter-spacing: 4px;
+    letter-spacing: 10px;
     padding: 20px;
-    text-shadow: 0 0 5px #0002;
+    font-weight: bold;
 }
 
 #controles .controle {
@@ -58,4 +28,69 @@ input {
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+#medias {
+    margin: 60px 0 0 650px;
+    width: calc(100dvw - 700px);
+    height: calc(100dvh - 150px);
+    border: none;
+}
+
+#medias ul {
+    width: inherit;
+    height: 60px;
+    padding: 20px;
+    background: var(--color1);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 30px;
+}
+
+#medias ul li {
+    width: calc((100dvw - 700px) / 5);
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color2);
+    color: var(--color5);
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#medias ul li:hover {
+    height: 35px;
+}
+
+#medias .media {
+    position: relative;
+    width: inherit;
+    height: calc(100dvh - 150px - 80px);
+    margin-top: 20px;
+    padding: 50px;
+    box-shadow: 0 0 10px #0002;
+    border-radius: 30px;
+    background: var(--color6);
+    overflow: hidden auto;
+}
+
+.upload {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    background: var(--info);
+    color: var(--succsses);
+}
+
+.list {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    width: calc(100dvw - 800px);
 }

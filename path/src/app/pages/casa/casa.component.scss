@@ -31,18 +31,6 @@ section #adicionar:hover {
     opacity: .8;
 }
 
-section #temas {
-    position: absolute;
-    top: 0;
-    right: -35px;
-    width: 30px;
-    height: 170px;
-
-    display: grid;
-    align-items: center;
-    justify-content: left;
-}
-
 section aside {
     position: relative;
     width: 250px;
@@ -63,6 +51,8 @@ section .aba {
     box-shadow: 0 0 5px #0002;
     display: flex;
     justify-content: space-around;
+    text-decoration: underline;
+    text-decoration-color: var(--info);
 }
 
 section .aba .numero {

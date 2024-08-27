@@ -1,29 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Header } from 'src/app/models/Header';
 import { HeaderService } from 'src/app/services/header.service';
-import { TemaService } from 'src/app/services/tema.service';
 
 @Component({
   selector: 'path-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
-  temaClaro: boolean = true;
-  temaColorido: boolean = false;
+export class HeaderComponent {
   mobile: string = 'desativado';
 
   constructor(
     readonly headerService: HeaderService,
-    private temaService: TemaService
   ) {};
-
-  ngOnInit(): void {
-    const temaSalvo = this.temaService.buscarTemaAtual();
-    this.temaClaro = temaSalvo == 'claro' || temaSalvo == 'classicRosa' ? true : false;
-    this.temaColorido = temaSalvo == 'classicAzul' || temaSalvo == 'classicRosa' ? true : false;
-  }
 
   get header(): Header[] {
     return this.headerService.buscarHeader;
@@ -31,10 +21,5 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu(): void {
     this.mobile = this.mobile == 'desativado' ? 'ativado' : 'desativado';
-  }
-
-  configTema(): void {
-    let tema = this.temaClaro ? 'claro' : 'escuro';
-    this.temaService.configTema(tema);
   }
 }

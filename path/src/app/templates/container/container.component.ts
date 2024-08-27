@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RelogioService } from 'src/app/services/relogio.service';
 
 import { TelaService } from 'src/app/services/tela.service';
-import { TemaService } from 'src/app/services/tema.service';
 
 @Component({
   selector: 'path-container',
@@ -11,7 +10,7 @@ import { TemaService } from 'src/app/services/tema.service';
   styleUrls: ['./container.component.scss']
 })
 export class ContainerComponent implements OnInit {
-  @Input() background: string = 'cor3';
+  @Input() background: string = 'padrao';
   @Input() monitor: string = 'false';
   @Output() tempo = new EventEmitter<string>();
   @Output() sorteio = new EventEmitter<string>();
@@ -19,19 +18,15 @@ export class ContainerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private temaService: TemaService,
     private telaService: TelaService,
     private relogioService: RelogioService
   ) {}
 
   ngOnInit(): void {
-    const temaSalvo = this.temaService.buscarTemaAtual();
-    this.temaService.configTema(temaSalvo);
 
     window.onstorage = (event) => {
       const chave = event.key;
       const novoValor = event.newValue;
-      const velhoValor = event.oldValue;
       const telaUrl = this.router.url.slice(0,-1);
       let id: string = '';
   
@@ -40,15 +35,6 @@ export class ContainerComponent implements OnInit {
       });// Busca id
 
       if(this.monitor == 'true') {
-        if(chave === 'tema') {
-          const html = document.querySelector("html");
-          const tema: string = String(novoValor);
-          const temaAtual: string = String(velhoValor);
-  
-          temaAtual ? html?.classList.remove(temaAtual) : null;
-  
-          html?.classList.add(tema);
-        }
         if(chave === 'tela') {
           const valores = novoValor?.split(",");
           if(valores) {

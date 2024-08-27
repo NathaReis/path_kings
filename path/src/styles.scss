@@ -7,34 +7,16 @@
 :root {
     --backgroundTela: linear-gradient(180deg, transparent, #000000a4), url(./app/assets/floresta.jpg);
     --color1: #dfdfdf;
-    --color2: #9e9e9e;
-    --color3: #646464;
-    --color4: #c6c6c6;
-    --color5: #ababab;
-}
-
-.classicRosa:root {
-    --color1: #d1b68d;
-    --color2: #f3daaa;
-    --color3: #492d49;
-    --color4: #51445f;
-    --color5: #5a5c75;
-}
-
-.classicAzul:root {
-    --color1: #a3c4c2;
-    --color2: #648285;
-    --color3: #b4a68e;
-    --color4: #f3daaa;
-    --color5: #101d1d;
-}
-
-.escuro:root {
-    --color1: #c5c5c5;
-    --color2: #1d1d1d;
-    --color3: #252525;
-    --color4: #0f0f0f;
-    --color5: #000000;
+    --color2: #c6c6c6;
+    --color3: #a3c4c2;
+    --color4: #b4a68e;
+    --color5: #646464;
+    --color6: #1d1d1d;
+    --color7: #000000;
+    --succsses: #c1ffb9;
+    --alert: #ffe5b6;
+    --info: #648285;
+    --warn: #492d49;
 }
 
 @media (max-width: 1200px) {

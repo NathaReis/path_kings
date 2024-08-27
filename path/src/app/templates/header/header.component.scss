@@ -7,7 +7,7 @@ header ul {
     align-items: center;
     list-style: none;
     font-size: 1.2rem;
-    background: #12253f;
+    background: #dfdfdf;
     box-shadow: 0 0 10px #00000038;
 }
 
@@ -19,7 +19,7 @@ header a {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: var(--color1);
+    color: #648285;
     text-shadow: 0 0 10px #00000042;
     font-family: "Poppins", Arial, Helvetica, sans-serif;
     font-style: normal;
@@ -31,16 +31,7 @@ header a {
 }
 header a:hover {
     background: var(--color2);
-    color: var(--color1);
-}
-
-#tema {
-    display: none;
-}
-
-#label-tema {
-    cursor: pointer;
-    color: var(--color1);
+    color: var(--color5);
 }
 
 .favicon {
@@ -49,7 +40,7 @@ header a:hover {
     left: 0;
     width: 70px;
     height: 70px;
-    background: linear-gradient(90deg, transparent, #12253f), url(../../assets/icons/2.png);
+    background: linear-gradient(90deg, transparent, #648285), url(../../assets/icons/2.png);
     background-size: 65px;
     background-position: center;
     background-repeat: no-repeat;
@@ -58,10 +49,14 @@ header a:hover {
 
 header .logo {
     position: absolute;
-    top: 0px;
-    left: 70px;
+    top: 0;
+    left: 0;
     padding: 0 70px 0 30px;
-    border-radius: 0 35px 35px 0;
+    border-radius: 0 40px 40px 0;
+}
+
+header .logo:hover {
+    border-radius: 0 40px 40px 0 / 0 100px 100px 0;
 }
 
 header .temas {
@@ -94,13 +89,6 @@ nav.ativado {
     height: 100dvh;
     display: flex;
     z-index: 2000;
-}
-
-.vidro {
-    width: 30dvw;
-    height: 100dvh;
-    background: #0002;
-    backdrop-filter: blur(2px);
 }
 
 .menu {
