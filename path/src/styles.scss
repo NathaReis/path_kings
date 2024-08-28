@@ -29,14 +29,12 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    // font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
 body {
     position: relative;
     width: 100dvw;
     height: calc(100dvh - 70px);
-    // font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 /* Button */
 /*
@@ -44,7 +42,6 @@ body {
 </button>
 */
 .button {
-    --color: #00A97F;
     padding: 0.8em 1.7em;
     background-color: transparent;
     border-radius: .3em;
@@ -55,9 +52,8 @@ body {
     font-weight: 400;
     font-size: 17px;
     border: 1px solid;
-    font-family: inherit;
     text-transform: uppercase;
-    color: var(--color);
+    color: var(--succsses);
     z-index: 1;
 }
    
@@ -70,7 +66,7 @@ body {
     position: absolute;
     border-radius: 50%;
     z-index: -1;
-    background-color: var(--color);
+    background-color: var(--succsses);
     transition: 1s ease;
 }
    
@@ -99,5 +95,5 @@ body {
 
 button:disabled {
     cursor: not-allowed;
-    opacity: .5;
+    opacity: .8;
 }

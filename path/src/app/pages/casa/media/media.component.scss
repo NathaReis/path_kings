@@ -58,7 +58,6 @@ input {
     background: var(--color2);
     color: var(--color5);
     font-size: 1rem;
-    font-family: "Poppins", sans-serif;
     border-radius: 20px;
     cursor: pointer;
     transition: .3s;
@@ -84,8 +83,20 @@ input {
     position: absolute;
     right: 40px;
     top: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     background: var(--info);
     color: var(--succsses);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.upload:hover {
+    background: var(--color1);
+    color: var(--color6);
 }
 
 .list {

@@ -40,55 +40,55 @@
                 </ul>
             </nav>
             <div class="media video" *ngIf="listaAtual == 'video'">
-                <button mat-mini-fab class="upload">
+                <label for="video" class="upload">
                     <mat-icon>upload</mat-icon>
-                </button>
+                </label>
 
-                <mat-selection-list #video class="list">
+                <mat-selection-list #video class="list"  multiple="false" (selectionChange)="onSelectionChange($event)">
                     <mat-list-option *ngFor="let video of videos">{{video.nome}}</mat-list-option>
                 </mat-selection-list>
                 
                 <p class="itemsSelected">
-                    Mídias selecionadas: {{video.selectedOptions.selected.length}}
+                    Vídeos selecionadas: {{video.selectedOptions.selected.length}}
                 </p>
             </div>
             <div class="media imagem" *ngIf="listaAtual == 'imagem'">
-                <button mat-mini-fab class="upload">
+                <label for="imagem" class="upload">
                     <mat-icon>upload</mat-icon>
-                </button>
+                </label>
                 
                 <mat-selection-list #imagem class="list">
                     <mat-list-option *ngFor="let imagem of imagens">{{imagem.nome}}</mat-list-option>
                 </mat-selection-list>
                 
                 <p class="itemsSelected">
-                    Mídias selecionadas: {{imagem.selectedOptions.selected.length}}
+                    Imagens selecionadas: {{imagem.selectedOptions.selected.length}}
                 </p>
             </div>
             <div class="media audio" *ngIf="listaAtual == 'audio'">
-                <button mat-mini-fab class="upload">
+                <label for="audio" class="upload">
                     <mat-icon>upload</mat-icon>
-                </button>
+                </label>
                 
                 <mat-selection-list #audio class="list">
                     <mat-list-option *ngFor="let audio of audios">{{audio.nome}}</mat-list-option>
                 </mat-selection-list>
                 
                 <p class="itemsSelected">
-                    Mídias selecionadas: {{audio.selectedOptions.selected.length}}
+                    Áudios selecionadas: {{audio.selectedOptions.selected.length}}
                 </p>
             </div>
             <div class="media powerpoint" *ngIf="listaAtual == 'powerpoint'">
-                <button mat-mini-fab class="upload">
+                <label for="powerpoint" class="upload">
                     <mat-icon>upload</mat-icon>
-                </button>
+                </label>
                 
                 <mat-selection-list #powerpoint class="list">
                     <mat-list-option *ngFor="let powerpoint of powerpoints">{{powerpoint.nome}}</mat-list-option>
                 </mat-selection-list>
                 
                 <p class="itemsSelected">
-                    Mídias selecionadas: {{powerpoint.selectedOptions.selected.length}}
+                    Power Points selecionadas: {{powerpoint.selectedOptions.selected.length}}
                 </p>
             </div>
         </fieldset>

@@ -7,7 +7,7 @@ header ul {
     align-items: center;
     list-style: none;
     font-size: 1.2rem;
-    background: #dfdfdf;
+    background: var(--color1);
     box-shadow: 0 0 10px #00000038;
 }
 
@@ -19,9 +19,7 @@ header a {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: #648285;
-    text-shadow: 0 0 10px #00000042;
-    font-family: "Poppins", Arial, Helvetica, sans-serif;
+    color: var(--info);
     font-style: normal;
     font-weight: 500;
     letter-spacing: 4px;
@@ -40,7 +38,7 @@ header a:hover {
     left: 0;
     width: 70px;
     height: 70px;
-    background: linear-gradient(90deg, transparent, #648285), url(../../assets/icons/2.png);
+    background: linear-gradient(90deg, transparent, var(--info)), url(../../assets/icons/2.png);
     background-size: 65px;
     background-position: center;
     background-repeat: no-repeat;
