@@ -1,10 +1,10 @@
 <path-container>
     <path-header></path-header>
     <body>
-        <input type="file" [multiple]="false" id="video" accept=".mp4, .webm">
-        <input type="file" [multiple]="false" id="imagem" accept=".jpeg, .jpg, .png, .webp">
-        <input type="file" [multiple]="false" id="audio" accept=".mp3, .wav">
-        <input type="file" [multiple]="false" id="powerpoint" accept=".pptx, application/vnd.ms-powerpoint">
+        <input (change)="uploadFile($event, 'video')" type="file" [multiple]="false" id="video" accept=".mp4, .webm">
+        <input (change)="uploadFile($event, 'imagem')" type="file" [multiple]="false" id="imagem" accept=".jpeg, .jpg, .png, .webp">
+        <input (change)="uploadFile($event, 'audio')" type="file" [multiple]="false" id="audio" accept=".mp3, .wav">
+        <input (change)="uploadFile($event, 'powerpoint')" type="file" [multiple]="false" id="powerpoint" accept=".pptx, application/vnd.ms-powerpoint">
 
         <fieldset id="controles">
             <legend>CONTROLES</legend>
@@ -49,7 +49,7 @@
                 </mat-selection-list>
                 
                 <p class="itemsSelected">
-                    Vídeos selecionadas: {{video.selectedOptions.selected.length}}
+                    Vídeos selecionados: {{video.selectedOptions.selected.length}}
                 </p>
             </div>
             <div class="media imagem" *ngIf="listaAtual == 'imagem'">
@@ -75,7 +75,7 @@
                 </mat-selection-list>
                 
                 <p class="itemsSelected">
-                    Áudios selecionadas: {{audio.selectedOptions.selected.length}}
+                    Áudios selecionados: {{audio.selectedOptions.selected.length}}
                 </p>
             </div>
             <div class="media powerpoint" *ngIf="listaAtual == 'powerpoint'">
@@ -88,7 +88,7 @@
                 </mat-selection-list>
                 
                 <p class="itemsSelected">
-                    Power Points selecionadas: {{powerpoint.selectedOptions.selected.length}}
+                    PowerPoints selecionados: {{powerpoint.selectedOptions.selected.length}}
                 </p>
             </div>
         </fieldset>
