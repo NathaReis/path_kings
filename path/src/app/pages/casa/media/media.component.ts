@@ -5,77 +5,57 @@ import { Observable } from 'rxjs';
 
 import { Media } from 'src/app/models/Media';
 
+interface Tipo {
+  nome: string,
+  dados: Media[]
+}
+
 @Component({
   selector: 'app-media',
   templateUrl: './media.component.html',
   styleUrls: ['./media.component.scss']
 })
 export class MediaComponent implements OnInit {
-  listaAtual: string = 'video';
-
-  videos: Media[] = [];
-  imagens: Media[] = [];
-  audios: Media[] = [];
-  powerpoints: Media[] = [];
+  tipoAtual: string = 'video';
+  ultimoArquivoSelecionado: Tipo = { nome: '', dados: [] };
+  listaTipos: Tipo[] = [
+    {
+      nome: 'video',
+      dados: []
+    },
+    {
+      nome: 'imagem',
+      dados: []
+    },
+    {
+      nome: 'audio',
+      dados: []
+    },
+    {
+      nome: 'powerpoint',
+      dados: []
+    },
+  ];
 
   ngOnInit(): void {
-    const erros = this.buscarDadosSalvos(['video','imagem','audio','powerpoint']);
-    if(erros.length > 0) {
-      console.log(erros);
-    }
+    this.buscarDadosSalvos();
   }
 
-  buscarDadosSalvos(dados: string[]): string[] {
-    let erros: string[] = [];
-    dados.map((categoria: string) => {
-      const valores = localStorage.getItem(categoria);
-      if(valores) {
-        const conversao: Media[] = JSON.parse(valores);
-        switch(categoria) {
-          case 'video':
-            this.videos = conversao;
-            break;
-          case 'imagem':
-            this.imagens = conversao;
-            break;
-          case 'audio':
-            this.audios = conversao;
-            break;
-          case 'powerpoint':
-            this.powerpoints = conversao;
-            break;
-          default:
-            erros.push(`Categoria ${categoria} não possui campo para preencher.`);
-        }
-      }
-      else {
-        erros.push(`Categoria ${categoria} não existe!`);
-      }
-    });
-    return erros;
+  buscarDadosSalvos(): void {
+    this.listaTipos.map((tipo: Tipo) => {
+      tipo.dados = JSON.parse(String(localStorage.getItem(tipo.nome)));
+    })
   }
 
   navMidia(tipo: string): void {
-    this.listaAtual = tipo;
+    this.tipoAtual = tipo;
   }
 
-  onSelectionChange(event: MatSelectionListChange) {
-    if (event.source.selectedOptions.selected.length > 0) {
-      const selectedVideo = event.source.selectedOptions.selected[0];
-      console.log('Vídeo selecionado:', selectedVideo);
-
-      // Faça algo com o vídeo selecionado, como:
-      // - Chamar um serviço para buscar mais informações
-      // - Atualizar outra parte da interface
-    }
-  }
-
-
-  uploadFile(dados: any, categoria: 'video' | 'imagem' | 'audio' | 'powerpoint'): void {
+  uploadFile(dados: any): void {
     const arquivo = dados.target.files[0];
     this.converterBase64(arquivo).subscribe({
       next: (arquivoConvertido: string) => {
-        const registroSalvo = this.registroArquivoSalvo(categoria);
+        const registroSalvo = localStorage.getItem(this.tipoAtual);
         let novoRegistro = '[]';
 
         if(registroSalvo) {
@@ -94,7 +74,8 @@ export class MediaComponent implements OnInit {
           }];
           novoRegistro = JSON.stringify(media);
         }
-        localStorage.setItem(categoria, novoRegistro);
+        localStorage.setItem(this.tipoAtual, novoRegistro);
+        this.buscarDadosSalvos()
       },
       error(err) {
         alert(err);
@@ -119,11 +100,10 @@ export class MediaComponent implements OnInit {
     })
   }
 
-  registroArquivoSalvo(categoria: string): string | undefined {
-    const local = localStorage.getItem(categoria);
-    if(categoria && categoria.length > 0) {
-      return String(local);
+  deleteArquivo(tipo: Tipo): void {
+    console.log(tipo);
+    if(confirm(`Deseja excluir arquivo?`)) {
+
     }
-    return;
   }
 }
