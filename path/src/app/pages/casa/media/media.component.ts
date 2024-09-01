@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSelectionListChange } from '@angular/material/list';
 
 import { Observable } from 'rxjs';
 
 import { Media } from 'src/app/models/Media';
+import { Tela } from 'src/app/models/Tela';
+import { TelaService } from 'src/app/services/tela.service';
 
 interface Tipo {
-  nome: string,
+  categoria: string,
   dados: Media[]
 }
 
@@ -17,34 +18,37 @@ interface Tipo {
 })
 export class MediaComponent implements OnInit {
   tipoAtual: string = 'video';
-  ultimoArquivoSelecionado: Tipo = { nome: '', dados: [] };
+  ultimoArquivoSelecionado: Tipo = { categoria: '', dados: [] };
   listaTipos: Tipo[] = [
     {
-      nome: 'video',
+      categoria: 'video',
       dados: []
     },
     {
-      nome: 'imagem',
+      categoria: 'imagem',
       dados: []
     },
     {
-      nome: 'audio',
+      categoria: 'audio',
       dados: []
     },
     {
-      nome: 'powerpoint',
+      categoria: 'powerpoint',
       dados: []
     },
   ];
+  telaSelecionada: string[] = [];
+  telas: Tela[] = [];
+
+  constructor(private telaService: TelaService) { }
 
   ngOnInit(): void {
-    this.buscarDadosSalvos();
+    this.buscarMedias();
+    this.telas = this.telaService.buscar();
   }
 
-  buscarDadosSalvos(): void {
-    this.listaTipos.map((tipo: Tipo) => {
-      tipo.dados = JSON.parse(String(localStorage.getItem(tipo.nome)));
-    })
+  toggleTodasTelas(ativar: boolean): void {
+    ativar ? this.telaSelecionada = ['todas'] : this.telaSelecionada = this.telaSelecionada.filter((tela: string) => tela !== 'todas');
   }
 
   navMidia(tipo: string): void {
@@ -55,27 +59,22 @@ export class MediaComponent implements OnInit {
     const arquivo = dados.target.files[0];
     this.converterBase64(arquivo).subscribe({
       next: (arquivoConvertido: string) => {
-        const registroSalvo = localStorage.getItem(this.tipoAtual);
-        let novoRegistro = '[]';
-
-        if(registroSalvo) {
-          const registro: Media[] = JSON.parse(registroSalvo);
           const media: Media = {
+            categoria: this.tipoAtual,
             nome: arquivo.name,
             dados: arquivoConvertido
           };
-          registro.push(media);
-          novoRegistro = JSON.stringify(registro);
-        }
-        else {
-          const media: Media[] = [{
-            nome: arquivo.name,
-            dados: arquivoConvertido
-          }];
-          novoRegistro = JSON.stringify(media);
-        }
-        localStorage.setItem(this.tipoAtual, novoRegistro);
-        this.buscarDadosSalvos()
+
+          this.withDB((db: any) => {
+            let request = db.add(media);
+            request.onsuccess = () => {
+              alert("Salvo com sucesso!");
+              this.buscarMedias();
+            };
+            request.onerror = () => {
+              alert("Erro ao tentar salvar!");
+            };
+          })
       },
       error(err) {
         alert(err);
@@ -100,10 +99,61 @@ export class MediaComponent implements OnInit {
     })
   }
 
-  deleteArquivo(tipo: Tipo): void {
-    console.log(tipo);
-    if(confirm(`Deseja excluir arquivo?`)) {
+  selecioneArquivo(media: Media): void {
+    console.log(media);
+  }
 
+  deleteArquivo(id: any): void {
+    if(confirm(`Deseja excluir arquivo?`)) {
+      this.withDB((db: any) => {
+        const request = db.delete(parseInt(id));
+        request.onsuccess = () => {
+          this.buscarMedias();
+        };
+        request.onerror = () => {
+          alert("Erro ao tentar deletar!");
+        };
+      })
+    }
+  }
+
+  buscarMedias(): void {
+    this.listaTipos.map((tipo: Tipo) => tipo.dados = []);
+    this.withDB((db: any) => {
+      db.openCursor().onsuccess = (evento: any) => {
+        let cursor = evento.target.result;
+        if(cursor) {
+          this.listaTipos.map((item: Tipo) => {
+            if(item.categoria === cursor.value.categoria) {
+              item.dados.push({
+                id: cursor.key,
+                categoria: cursor.value.categoria,
+                nome: cursor.value.nome,
+                dados: cursor.value.dados
+              })
+            }
+          });
+          cursor.continue();
+        }
+      }
+    })
+  }
+
+  withDB(callback: any): void {
+    let request = indexedDB.open("mediaGroup", 1);
+    request.onerror = () => this.withDB(callback);
+    request.onsuccess = () => {
+      let db = request.result;
+      callback(getStore(db));
+    }
+    request.onupgradeneeded = () => {
+      let db = request.result;
+      db.createObjectStore("medias", {autoIncrement: true});
+      callback(getStore(db));
+    }
+
+    function getStore(db: any) {
+      return db.transaction(["medias"], "readwrite").objectStore("medias");
     }
   }
 }

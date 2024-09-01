@@ -25,23 +25,39 @@
         <fieldset id="medias">
             <nav>
                 <ul>
-                    <li *ngFor="let tipo of listaTipos" class="navMedia" id="tipo.nome" (click)="navMidia(tipo.nome)">
-                        {{ tipo.nome.toUpperCase() }}
+                    <li *ngFor="let tipo of listaTipos" class="navMedia" id="tipo.nome" (click)="navMidia(tipo.categoria)">
+                        {{ tipo.categoria.toUpperCase() }}
                     </li>
                 </ul>
             </nav>
 
             <div *ngFor="let tipo of listaTipos">
-                <div  class="media {{tipo.nome}}" *ngIf="tipo.nome == tipoAtual">
-                    <label for="{{tipo.nome}}" class="upload">
+                <div  class="media {{tipo.categoria}}" *ngIf="tipo.categoria == tipoAtual">
+                    <mat-button-toggle-group *ngIf="telas.length > 0" 
+                        class="buttonToggleBox"  
+                        name="telas" 
+                        [(ngModel)]="telaSelecionada" 
+                        multiple required aria-label="Font Style">
+                      <mat-button-toggle value="todas" (click)="toggleTodasTelas(true)">Todas</mat-button-toggle>
+                      <mat-button-toggle *ngFor="let tela of telas" value="{{tela.numero}}" (click)="toggleTodasTelas(false)">Tela {{tela.numero}}</mat-button-toggle>
+                    </mat-button-toggle-group>   
+
+                    <label for="{{tipo.categoria}}" class="upload">
                         <mat-icon>upload</mat-icon>
-                    </label>
-                    <label class="delete" (click)="deleteArquivo(tipo)">
-                        <mat-icon>delete</mat-icon>
                     </label>
         
                     <div class="lista">
-                        button
+                        <div *ngFor="let dado of tipo.dados" class="media-item">
+                            <p (click)="selecioneArquivo(dado)">{{ dado.nome }}</p>   
+                            <p>
+                                <button mat-icon-button (click)="deleteArquivo(dado)" [disabled]="telaSelecionada.length <= 0">
+                                    <mat-icon>play_arrow</mat-icon>
+                                </button>    
+                                <button mat-icon-button (click)="deleteArquivo(dado.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>                        
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
