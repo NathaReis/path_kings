@@ -24,6 +24,7 @@ import { TelaTempoComponent } from './pages/tela/tela-tempo/tela-tempo.component
 import { SorteioComponent } from './pages/casa/sorteio/sorteio.component';
 import { TelaSorteioComponent } from './pages/tela/tela-sorteio/tela-sorteio.component';
 import { MediaComponent } from './pages/casa/media/media.component';
+import { TelaMediaComponent } from './pages/tela/tela-media/tela-media.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MediaComponent } from './pages/casa/media/media.component';
     SorteioComponent,
     TelaSorteioComponent,
     MediaComponent,
+    TelaMediaComponent,
   ],
   imports: [
     BrowserModule,
