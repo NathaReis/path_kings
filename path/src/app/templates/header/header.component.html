@@ -1,6 +1,14 @@
 <header>
     <nav>
       <ul>
+        <li class="mobile-li">
+          <a routerLink="/casa" class="logo">
+            <mat-icon>
+              home
+            </mat-icon>
+            Casa
+            </a> 
+        </li>
         <li *ngFor="let item of header" class="desktop">
           <a routerLink="{{ item.rota }}" ngClass="{{ item.class }}">
             <mat-icon>

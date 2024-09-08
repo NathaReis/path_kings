@@ -70,6 +70,10 @@ header .mobile {
     right: 120px;
 }
 
+header .mobile-li {
+    display: none;
+}
+
 header .mobile button {
     background: var(--color1);
     color: var(--color5);
@@ -87,19 +91,20 @@ nav.ativado {
     height: 100dvh;
     display: flex;
     z-index: 2000;
+    list-style: none;
 }
 
 .menu {
     width: 70dvw;
     height: 100dvh;
-    background: var(--color5);
+    background: var(--color1);
     display: block;
 }
 
 .menu .header {
     width: 70dvw;
     height: 140px;
-    background: var(--color4);
+    background: var(--color2);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -132,11 +137,18 @@ nav.ativado {
     display: none;
 }
 
+li.ativado {
+    display: block;
+}
+
 @media (max-width: 700px) {
     .desktop {
         display: none;
     }
     header .mobile {
+        display: block;
+    }
+    header .mobile-li {
         display: block;
     }
 }

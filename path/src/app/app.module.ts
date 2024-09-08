@@ -25,6 +25,7 @@ import { SorteioComponent } from './pages/casa/sorteio/sorteio.component';
 import { TelaSorteioComponent } from './pages/tela/tela-sorteio/tela-sorteio.component';
 import { MediaComponent } from './pages/casa/media/media.component';
 import { TelaMediaComponent } from './pages/tela/tela-media/tela-media.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { TelaMediaComponent } from './pages/tela/tela-media/tela-media.component
     MatSlideToggleModule,
     MatCheckboxModule,
     MatListModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

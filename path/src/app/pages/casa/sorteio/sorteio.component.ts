@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { Media } from 'src/app/models/Media';
 import { Tela } from 'src/app/models/Tela';
+import { SorteioService } from 'src/app/services/sorteio.service';
 import { TelaService } from 'src/app/services/tela.service';
 
 @Component({
@@ -21,12 +22,33 @@ export class SorteioComponent implements OnInit {
   numeroAtual: number = 0;
   posicaoAtual: number = 0;
   sorteando: boolean = false;
+  sourceAudio: string = '';
+  sourceAudioFim: string = '';
+  songIcon: string = 'volume_off';
+  volume: number = 0;
 
-  constructor(private telaService: TelaService) { }
+  constructor(
+    private telaService: TelaService,
+    private sorteioService: SorteioService
+  ) { }
 
   ngOnInit(): void {
     this.telas = this.telaService.buscar();
     this.recuperarEstadoAtual();
+    this.sorteioService.getArquivosPath().subscribe({
+      next: (value: Media[]) => {
+        const suspense = value.find((media: Media) => media.categoria == 'inicio')?.dados;
+        const fim = value.find((media: Media) => media.categoria == 'fim')?.dados;
+
+        console.log(value)
+
+        if(suspense && fim) {
+          this.sourceAudio = suspense;
+          this.sourceAudioFim = fim;
+        }
+      },
+      error: (error: any) => console.log(error)
+    })
   }
 
   navegar(): void {
@@ -96,12 +118,30 @@ export class SorteioComponent implements OnInit {
     this.numerosNaoSorteados.sort((a,b) => a < b ? -1 : 1);
   }
 
+  setVolume(): void {
+    this.volume = this.songIcon == 'volume_up' ? 0 : 0.5;
+    this.songIcon = this.songIcon == 'volume_up' ? 'volume_off' : 'volume_up';
+  }
+
+  efeitoSonoro(play: boolean): void {
+    const $suspense: any = document.querySelector("#suspense");
+    const $fim: any = document.querySelector("#fim");
+
+    play ? $fim.pause() : $fim.play();
+    play ? $suspense.play() : $suspense.pause();
+    $fim.currentTime = 0;
+    $suspense.currentTime = 0;
+    this.sorteando = play;
+  }
+
   sortear(): void {
+
     const tempoAleatorio = Math.floor(Math.random() * (500 - 50 + 1)) + 50;
     let countMilissegundos = 0;
     
     if(this.numerosNaoSorteados.length > 1) {
-      this.sorteando = true;
+      this.efeitoSonoro(true);
+
       const sorteio = setInterval(() => {
         this.posicaoAtual++;// Sortear
           
@@ -115,7 +155,7 @@ export class SorteioComponent implements OnInit {
         countMilissegundos++;
         if(countMilissegundos == tempoAleatorio) {
           clearInterval(sorteio);
-          this.sorteando = false;
+          this.efeitoSonoro(false);
         }// Parar sorteio
       },10);
   
