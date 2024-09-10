@@ -40,8 +40,6 @@ export class SorteioComponent implements OnInit {
         const suspense = value.find((media: Media) => media.categoria == 'inicio')?.dados;
         const fim = value.find((media: Media) => media.categoria == 'fim')?.dados;
 
-        console.log(value)
-
         if(suspense && fim) {
           this.sourceAudio = suspense;
           this.sourceAudioFim = fim;

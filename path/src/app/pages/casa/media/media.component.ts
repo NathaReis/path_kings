@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Observable } from 'rxjs';
 
 import { Media } from 'src/app/models/Media';
 import { Tela } from 'src/app/models/Tela';
+import { MediaService } from 'src/app/services/media.service';
 import { TelaService } from 'src/app/services/tela.service';
 
 interface Tipo {
@@ -19,31 +19,18 @@ interface Tipo {
 export class MediaComponent implements OnInit {
   tipoAtual: string = 'video';
   ultimoArquivoSelecionado: Tipo = { categoria: '', dados: [] };
-  listaTipos: Tipo[] = [
-    {
-      categoria: 'video',
-      dados: []
-    },
-    {
-      categoria: 'imagem',
-      dados: []
-    },
-    {
-      categoria: 'audio',
-      dados: []
-    },
-    {
-      categoria: 'powerpoint',
-      dados: []
-    },
-  ];
+  listaTipos: Tipo[] = [];
   telaSelecionada: string[] = [];
   telas: Tela[] = [];
 
-  constructor(private telaService: TelaService) { }
+  constructor(
+    private telaService: TelaService,
+    private mediaService: MediaService
+  ) { }
 
   ngOnInit(): void {
     this.telas = this.telaService.buscar();
+    this.buscarMedia();
   }
 
   toggleTodasTelas(ativar: boolean): void {
@@ -54,16 +41,24 @@ export class MediaComponent implements OnInit {
     this.tipoAtual = tipo;
   }
 
+  buscarMedia(): void {
+    this.mediaService.buscarMedias().subscribe({
+      next: (value) => {
+        console.log(value);
+        this.listaTipos = value;
+      },
+      error: (error) => console.error(error)
+    });
+  }
+
   uploadFile(dados: any): void {
     const arquivo = dados.target.files[0];
-    this.converterBase64(arquivo).subscribe({
+    this.mediaService.converterBase64(arquivo).subscribe({
       next: (arquivoConvertido: string) => {
-          const media: Media = {
-            categoria: this.tipoAtual,
-            nome: arquivo.name,
-            dados: arquivoConvertido
-          };
-          console.log(media);
+        this.mediaService.criarMedia(this.tipoAtual,arquivo.name,arquivoConvertido).subscribe({
+          next: (value) => this.buscarMedia(),
+          error: (error) => console.error(error)
+        });
       },
       error(err) {
         alert(err);
@@ -71,21 +66,13 @@ export class MediaComponent implements OnInit {
     });
   }
 
-  converterBase64(file: File): Observable<string> {
-    return new Observable((observer) => {
-      const fileReader = new FileReader();
-      fileReader.onload = (data: any) => {
-        const resultado = data.target.result;
-        if(resultado) {
-          observer.next(resultado);
-        }
-        else {
-          observer.error('Arquivo não encontrado!');
-        }
-        observer.complete();
+  deleteMedia(id: string): void {
+    this.mediaService.deletarMedia(id).subscribe({
+      next: (value) => {
+        alert(`Media ${value.nome}, excluída com sucesso!`);
+        this.buscarMedia();
       }
-      fileReader.readAsDataURL(file);
-    })
+    });
   }
 
   selecioneArquivo(media: Media): void {

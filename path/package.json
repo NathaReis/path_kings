@@ -8,7 +8,7 @@
     "test": "ng test",
     "start": "ng serve",
     "start-db": "json-server --watch db.json --port 3000",
-    "start-backend": "node server",
+    "start-backend": "concurrently \"json-server --watch db.json --port 3000\" \"node server\"",
     "start-path": "concurrently \"ng serve\" \"json-server --watch db.json --port 3000\" \"node server\""
   },
   "private": true,

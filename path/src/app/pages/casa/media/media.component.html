@@ -53,7 +53,7 @@
                                 <button mat-icon-button [disabled]="telaSelecionada.length <= 0">
                                     <mat-icon>play_arrow</mat-icon>
                                 </button>    
-                                <button mat-icon-button>
+                                <button mat-icon-button (click)="deleteMedia(dado.id)">
                                     <mat-icon>delete</mat-icon>
                                 </button>                        
                             </p>
