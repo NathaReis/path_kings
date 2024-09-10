@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { Media } from 'src/app/models/Media';
 import { Tela } from 'src/app/models/Tela';
@@ -43,10 +42,7 @@ export class MediaComponent implements OnInit {
 
   buscarMedia(): void {
     this.mediaService.buscarMedias().subscribe({
-      next: (value) => {
-        console.log(value);
-        this.listaTipos = value;
-      },
+      next: (value) => this.listaTipos = value,
       error: (error) => console.error(error)
     });
   }
@@ -56,7 +52,7 @@ export class MediaComponent implements OnInit {
     this.mediaService.converterBase64(arquivo).subscribe({
       next: (arquivoConvertido: string) => {
         this.mediaService.criarMedia(this.tipoAtual,arquivo.name,arquivoConvertido).subscribe({
-          next: (value) => this.buscarMedia(),
+          next: () => this.buscarMedia(),
           error: (error) => console.error(error)
         });
       },

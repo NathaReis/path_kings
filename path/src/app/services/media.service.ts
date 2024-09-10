@@ -32,7 +32,6 @@ export class MediaService {
       dados: []
     },
   ];
-  listaCategorias: string[] = ['video','imagem','audio','powerpoint'];
 
   constructor(private http: HttpClient) { }
 
@@ -40,13 +39,7 @@ export class MediaService {
     return new Observable((observer) => {
       const fileReader = new FileReader();
       fileReader.onload = (data: any) => {
-        const resultado = data.target.result;
-        if(resultado) {
-          observer.next(resultado);
-        }
-        else {
-          observer.error('Arquivo não encontrado!');
-        }
+        data.target.result ? observer.next(data.target.result) : observer.error('Arquivo não encontrado!');
         observer.complete();
       }
       fileReader.readAsDataURL(file);
@@ -69,22 +62,11 @@ export class MediaService {
         next: (value: Media[]) => {
           this.listaTipos.map((tipo: Tipo) => {
             value.map((media: Media) => {
-              console.log(tipo)
-              console.log(media)
-              console.log(this.listaCategorias.includes(media.categoria))
-              if(this.listaCategorias.includes(media.categoria)) {
-                if(tipo.categoria == media.categoria) {
-                  tipo.dados.push(media);
-                }
-              }// Se categoria da mídia já existir na lista
-              else {
-                this.listaCategorias.push(media.categoria);
-                this.listaTipos.push({categoria: media.categoria, dados: [media]});
-              }// Se a categoria for nova
+              if(tipo.categoria == media.categoria) {
+                tipo.dados.push(media);
+              }
             });
           });
-          console.log(this.listaTipos)
-          console.log(this.listaCategorias)
           observer.next(this.listaTipos);
           observer.complete();
         },

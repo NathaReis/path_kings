@@ -33,18 +33,22 @@
 
             <div *ngFor="let tipo of listaTipos">
                 <div  class="media {{tipo.categoria}}" *ngIf="tipo.categoria == tipoAtual">
-                    <mat-button-toggle-group *ngIf="telas.length > 0" 
-                        class="buttonToggleBox"  
-                        name="telas" 
-                        [(ngModel)]="telaSelecionada" 
-                        multiple required aria-label="Font Style">
-                      <mat-button-toggle value="todas" (click)="toggleTodasTelas(true)">Todas</mat-button-toggle>
-                      <mat-button-toggle *ngFor="let tela of telas" value="{{tela.numero}}" (click)="toggleTodasTelas(false)">Tela {{tela.numero}}</mat-button-toggle>
-                    </mat-button-toggle-group>   
 
-                    <label for="{{tipo.categoria}}" class="upload">
-                        <mat-icon>upload</mat-icon>
-                    </label>
+                    <header class="header">
+                        {{ tipo.categoria.toUpperCase() }}
+                        <mat-button-toggle-group *ngIf="telas.length > 0" 
+                            class="buttonToggleBox"  
+                            name="telas" 
+                            [(ngModel)]="telaSelecionada" 
+                            multiple required aria-label="Font Style">
+                          <mat-button-toggle value="todas" (click)="toggleTodasTelas(true)">Todas</mat-button-toggle>
+                          <mat-button-toggle *ngFor="let tela of telas" value="{{tela.numero}}" (click)="toggleTodasTelas(false)">Tela {{tela.numero}}</mat-button-toggle>
+                        </mat-button-toggle-group>   
+    
+                        <label for="{{tipo.categoria}}" class="upload">
+                            <mat-icon>upload</mat-icon>
+                        </label>
+                    </header>
         
                     <div class="lista">
                         <div *ngFor="let dado of tipo.dados" class="media-item">
