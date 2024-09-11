@@ -52,9 +52,9 @@
         
                     <div class="lista">
                         <div *ngFor="let dado of tipo.dados" class="media-item">
-                            <p (click)="selecioneArquivo(dado)">{{ dado.nome }}</p>   
+                            <p>{{ dado.nome }}</p>   
                             <p>
-                                <button mat-icon-button [disabled]="telaSelecionada.length <= 0">
+                                <button mat-icon-button [disabled]="telaSelecionada.length <= 0"  (click)="selecioneArquivo(dado)">
                                     <mat-icon>play_arrow</mat-icon>
                                 </button>    
                                 <button mat-icon-button (click)="deleteMedia(dado.id)">
