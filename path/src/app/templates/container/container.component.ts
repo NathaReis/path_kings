@@ -14,6 +14,7 @@ export class ContainerComponent implements OnInit {
   @Input() monitor: string = 'false';
   @Output() tempo = new EventEmitter<string>();
   @Output() sorteio = new EventEmitter<string>();
+  @Output() media = new EventEmitter<string>();
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +22,14 @@ export class ContainerComponent implements OnInit {
     private telaService: TelaService,
     private relogioService: RelogioService
   ) {}
+
+  validoIdNovoValor(novoValor: string|null, meuId: string): boolean {
+    if(novoValor) {
+      const ids = novoValor.split(",").slice(0,novoValor.split(",").length - 1); 
+      return ids.includes(meuId);
+    }
+    return false;
+  }
 
   ngOnInit(): void {
 
@@ -34,38 +43,29 @@ export class ContainerComponent implements OnInit {
         id = String(params["id"]);
       });// Busca id
 
+
       if(this.monitor == 'true') {
-        if(chave === 'tela') {
-          const valores = novoValor?.split(",");
-          if(valores) {
-            this.telaService.eventosLocalStorage(valores, id, telaUrl, this.router);      
+        if(this.validoIdNovoValor(novoValor, id) && novoValor) {
+          if(chave === 'tela') {
+            this.telaService.eventosLocalStorage(novoValor.split(","), id, telaUrl, this.router);      
           }
-        }
-        if(chave === 'tempo') {
-          let id: string = '';
-  
-          this.route.params.subscribe((params: any) => {
-            id = String(params["id"]);
-          });// Busca id
-
-          const valores = novoValor?.split(",");
-          if(valores?.includes(id)) {
-            const ultimoIndex = valores.length - 1;
-            const horario = valores[ultimoIndex];
-
+          if(chave === 'tempo') {  
+            const ultimoIndex = novoValor.split(",").length - 1;
+            const horario = novoValor.split(",")[ultimoIndex];
             this.tempo.emit(horario);
           }
-        }
-        if(chave === 'sorteio') {
-          const splitValor = novoValor?.split(",");
-          const ids = splitValor?.slice(0,splitValor.length - 1);
-          if(ids?.includes(id) && splitValor) {  
-            const numero = splitValor?.pop();  
-            this.sorteio.emit(numero);
+          if(chave === 'sorteio') {
+            this.sorteio.emit(novoValor.split(",").pop());  
+            localStorage.removeItem('sorteio');
+          }
+          if(chave === 'media') {
+            this.media.emit(novoValor.split(",").pop());
+            localStorage.removeItem('media');
           }
         }
       }
       else {
+        // Retonrno do relógio
         if(chave === 'tempo_status_1') {
           this.relogioService.setRelogio(1,String(novoValor));
         }

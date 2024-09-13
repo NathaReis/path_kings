@@ -75,6 +75,25 @@ export class MediaService {
     });
   }
 
+  buscarMedia(id: string): Observable<Media> {
+    return new Observable((observer) => {
+      this.buscarMedias().subscribe({
+        next: (tipos: Tipo[]) => {
+          tipos.map((tipo: Tipo) => {
+            tipo.dados.map((media: Media) => {
+              if(media.id === id) {
+                observer.next(media);
+                observer.complete();
+                return;
+              }
+            });
+          });
+        },
+        error: (error) => observer.error(error)
+      });
+    });
+  }
+
   deletarMedia(id: string): Observable<Media> {
     return this.http.delete<Media>(`${this.baseURL}/${id}`);
   }

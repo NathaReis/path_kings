@@ -45,7 +45,7 @@ export class SorteioComponent implements OnInit {
           this.sourceAudioFim = fim;
         }
       },
-      error: (error: any) => console.log(error)
+      error: (error: any) => console.error(error)
     })
   }
 
@@ -172,6 +172,10 @@ export class SorteioComponent implements OnInit {
   resetarForm(): void {
     this.numeroAtual = 0;
     localStorage.setItem("sorteio", `${this.telaSelecionada},${this.numeroAtual}`);
+    sessionStorage.removeItem("numerosSorteados_sorteio")
+    sessionStorage.removeItem("numerosNaoSorteados_sorteio")
+    sessionStorage.removeItem("numeros_sorteio")
+    sessionStorage.removeItem("telas_sorteio")
     this.posicaoAtual = 0;
     this.numeroInicial = 1;
     this.numeroFinal = 2;

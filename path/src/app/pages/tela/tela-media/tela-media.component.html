@@ -1,3 +1,4 @@
-<path-container background="cor1" monitor="true">
-    
+<path-container background="cor1" monitor="true" (media)="buscarMedia($event)">
+    <img [src]="media[0].dados" [alt]="media[0].nome" *ngIf="media[0].categoria == 'imagem'">
+    <video [src]="media[0].dados" autoplay controls *ngIf="media[0].categoria == 'video'"></video>
 </path-container>

@@ -21,6 +21,7 @@ export class MediaComponent implements OnInit {
   listaTipos: Tipo[] = [];
   telaSelecionada: string[] = [];
   telas: Tela[] = [];
+  audio: string = "";
 
   constructor(
     private telaService: TelaService,
@@ -71,7 +72,18 @@ export class MediaComponent implements OnInit {
     });
   }
 
+  navegar(): void {
+    let telas: number[] = this.telaSelecionada.includes('todas') ? [1,2,3] : this.telaSelecionada.map((tela: string) => +tela);
+    this.telaService.navegar('media',telas);
+  }
+
   selecioneArquivo(media: Media): void {
-    console.log(media);
+    if(media.categoria != 'audio') {
+      this.navegar();
+      localStorage.setItem('media', `${this.telaSelecionada},${media.id}`);
+    }
+    else {
+      this.audio = media.dados;
+    }
   }
 }

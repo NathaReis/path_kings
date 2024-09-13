@@ -49,7 +49,7 @@
                             <mat-icon>upload</mat-icon>
                         </label>
                     </header>
-        
+                    
                     <div class="lista">
                         <div *ngFor="let dado of tipo.dados" class="media-item">
                             <p>{{ dado.nome }}</p>   
@@ -67,4 +67,5 @@
             </div>
         </fieldset>
     </body>
+    <audio [src]="audio" autoplay></audio>
 </path-container>
