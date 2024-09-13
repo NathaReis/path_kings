@@ -73,8 +73,15 @@ export class MediaComponent implements OnInit {
   }
 
   navegar(): void {
-    let telas: number[] = this.telaSelecionada.includes('todas') ? [1,2,3] : this.telaSelecionada.map((tela: string) => +tela);
-    this.telaService.navegar('media',telas);
+    if(this.telaSelecionada.includes('todas')) {
+      const telasId = this.telas.map((tela: Tela) => tela.numero)
+      console.log(telasId)
+      this.telaService.navegar('media',telasId);
+    }
+    else {
+      const telasId = this.telaSelecionada.map((tela: string) => +tela)
+      this.telaService.navegar('media',telasId);
+    }
   }
 
   selecioneArquivo(media: Media): void {
