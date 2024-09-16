@@ -80,7 +80,9 @@ export class TelaService {
     const limiteTela = this.listaTelas.length < 3;
     if(limiteTela) {
       const numero = this.listaTelas.length + 1;
+      
       window.open(`../tela/${numero}`,"_blank",this.configuracaoOpenTela);
+      
       const novaTela: Tela = {
         numero: numero,
         icone: 'villa',
