@@ -1,7 +1,8 @@
 const {
     app,
     BrowserWindow,
-    screen
+    screen,
+    ipcRenderer
 } = require('electron');
 
 let appWindow;
@@ -25,14 +26,16 @@ function createWindow() {
 
     if(externalDisplay) {
         externalDisplay.map((display) => {
-            let win = new BrowserWindow({
-                x: display.bounds.x,
-                y: display.bounds.y,
-                minWidth: display.workAreaSize.width,
-                minHeight: display.workAreaSize.height
-            });
-            win.maximize();
-            win.loadFile('dist/path/index.html');
+            setTimeout(() => {
+                let win = new BrowserWindow({
+                    x: display.bounds.x,
+                    y: display.bounds.y,
+                    minWidth: display.workAreaSize.width,
+                    minHeight: display.workAreaSize.height
+                });
+                win.maximize();
+                win.loadFile('dist/path/index.html');
+            },500);
         });
     }
 }

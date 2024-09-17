@@ -18,11 +18,11 @@ const routes: Routes = [
   {path: 'casa/sorteio', component: SorteioComponent},
   {path: 'casa/media', component: MediaComponent},
 
-  {path: 'tela/:id', component: TelaComponent},
-  {path: 'tela/relogio/:id', component: TelaRelogioComponent},
-  {path: 'tela/tempo/:id', component: TelaTempoComponent},
-  {path: 'tela/sorteio/:id', component: TelaSorteioComponent},
-  {path: 'tela/media/:id', component: TelaMediaComponent},
+  {path: 'tela', component: TelaComponent},
+  {path: 'tela/relogio', component: TelaRelogioComponent},
+  {path: 'tela/tempo', component: TelaTempoComponent},
+  {path: 'tela/sorteio', component: TelaSorteioComponent},
+  {path: 'tela/media', component: TelaMediaComponent},
   {path: '**', redirectTo: 'casa', pathMatch: 'full'},
 ];
 

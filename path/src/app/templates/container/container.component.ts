@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RelogioService } from 'src/app/services/relogio.service';
 
+import { RelogioService } from 'src/app/services/relogio.service';
 import { TelaService } from 'src/app/services/tela.service';
 
 @Component({
@@ -16,6 +16,8 @@ export class ContainerComponent implements OnInit {
   @Output() sorteio = new EventEmitter<string>();
   @Output() media = new EventEmitter<string>();
 
+  id: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -23,31 +25,27 @@ export class ContainerComponent implements OnInit {
     private relogioService: RelogioService
   ) {}
 
-  validoIdNovoValor(novoValor: string|null, meuId: string): boolean {
+  validoIdNovoValor(novoValor: string|null): boolean {
     if(novoValor) {
       const ids = novoValor.split(",").slice(0,novoValor.split(",").length - 1); 
-      return ids.includes(meuId);
+      return ids.includes(this.id);
     }
     return false;
   }
 
   ngOnInit(): void {
 
+    this.formatarId();
+
     window.onstorage = (event) => {
       const chave = event.key;
       const novoValor = event.newValue;
       const telaUrl = this.router.url.slice(0,-1);
-      let id: string = '';
-  
-      this.route.params.subscribe((params: any) => {
-        id = String(params["id"]);
-      });// Busca id
-
 
       if(this.monitor == 'true') {
-        if(this.validoIdNovoValor(novoValor, id) && novoValor) {
+        if(this.validoIdNovoValor(novoValor) && novoValor) {
           if(chave === 'tela') {
-            this.telaService.eventosLocalStorage(novoValor.split(","), id, telaUrl, this.router);      
+            this.telaService.eventosLocalStorage(novoValor.split(","), this.id, telaUrl, this.router);      
           }
           if(chave === 'tempo') {  
             const ultimoIndex = novoValor.split(",").length - 1;
@@ -76,6 +74,25 @@ export class ContainerComponent implements OnInit {
           this.relogioService.setRelogio(3,String(novoValor));
         }
       }
+    }
+  }
+
+  formatarId(): void {
+    const local = localStorage.getItem("id");
+
+    if(local) {
+      if(local.split(',').length === 1) {
+        localStorage.setItem("id", '1,2');
+        this.id = '2';
+      }
+      else if(local.split(',').length === 2) {
+        localStorage.setItem("id", '1,2,3');
+        this.id = '3';
+      }
+    }
+    else {
+      localStorage.setItem("id", '1');
+      this.id = '1';
     }
   }
 }

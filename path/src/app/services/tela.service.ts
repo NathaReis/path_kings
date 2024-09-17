@@ -8,31 +8,9 @@ import { Tela } from '../models/Tela';
   providedIn: 'root'
 })
 export class TelaService {
-  baseUrl = window.location.origin;
   listaTelas: Tela[] = [];
-  configuracaoOpenTela: string = `toolbar=yes,location=yes,directories=no, status=no, menubar=yes,scrollbars=yes, resizable=no,copyhistory=yes, width=500px,height=500px`;
   
   constructor(readonly iconeRotaService: IconeRotaService) { }
-  
-  private ordenarLista(lista: Tela[]): Tela[] {
-    return lista.sort((a:Tela,b:Tela) => a.numero > b.numero ? 1 : -1);
-  }
-
-  private excluirTelaLista(numero: number): Tela[] {
-    this.listaTelas = this.ordenarLista(this.listaTelas); // A exclusão só é bem sucedida com telas ordenadas.
-    let novaLista: Tela[] = this.listaTelas.filter(el => {
-      if(el.numero !== numero) {
-        if(el.numero < numero) {
-          return el;
-        }
-        localStorage.setItem("tela", `${el.numero},decrementoId`);// Envia comando para decrementar id da tela
-        el.numero--;
-        return el;
-      }// Remove tela da lista
-      return
-    });
-    return novaLista;
-  }
 
   private registrarSessionStorage(): void {
     if(this.listaTelas.length > 0) {
@@ -68,31 +46,6 @@ export class TelaService {
 
     }
     return this.listaTelas;
-  }
-
-  fechar(numero: number): Tela[] {
-    localStorage.setItem("tela", `${numero},fechar`);// Envia comando para fechar a tela
-    this.listaTelas = this.excluirTelaLista(numero);// Exclui tela da lista local
-    this.registrarSessionStorage();// Registra a nova lista sem a tela na sessão 
-    return this.listaTelas;
-  }
-
-  gerar(): Tela[] | undefined {
-    const limiteTela = this.listaTelas.length < 3;
-    if(limiteTela) {
-      const numero = this.listaTelas.length + 1;
-      
-      window.open(`../tela/${numero}`,"_blank",this.configuracaoOpenTela);
-      
-      const novaTela: Tela = {
-        numero: numero,
-        icone: 'villa',
-      }
-      this.listaTelas.push(novaTela);
-      this.registrarSessionStorage();
-      return this.listaTelas;
-    }
-    return;
   }
 
   navegar(rota: string, numeros: number[]): void {
