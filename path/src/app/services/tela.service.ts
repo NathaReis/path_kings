@@ -8,6 +8,7 @@ import { Tela } from '../models/Tela';
   providedIn: 'root'
 })
 export class TelaService {
+  baseUrl = window.location.origin;
   listaTelas: Tela[] = [];
   configuracaoOpenTela: string = `toolbar=yes,location=yes,directories=no, status=no, menubar=yes,scrollbars=yes, resizable=no,copyhistory=yes, width=500px,height=500px`;
   
