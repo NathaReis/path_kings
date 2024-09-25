@@ -81,17 +81,12 @@ export class ContainerComponent implements OnInit {
     const local = localStorage.getItem("id");
 
     if(local) {
-      if(local.split(',').length === 1) {
-        localStorage.setItem("id", '1,2');
-        this.id = '2';
-      }
-      else if(local.split(',').length === 2) {
-        localStorage.setItem("id", '1,2,3');
-        this.id = '3';
-      }
+      const lista = JSON.parse(local);
+      this.id = String(lista.length);
+      localStorage.setItem("id", lista.push(this.id));
     }
     else {
-      localStorage.setItem("id", '1');
+      localStorage.setItem("id", JSON.stringify([1]));
       this.id = '1';
     }
   }

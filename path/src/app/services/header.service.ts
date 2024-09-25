@@ -29,11 +29,6 @@ export class HeaderService {
       nome: 'media',
       rota: '/casa/media',
       icon: 'audiotrack'
-    },
-    {
-      nome: 'tela',
-      rota: '/tela',
-      icon: 'window'
     }
   ]
 

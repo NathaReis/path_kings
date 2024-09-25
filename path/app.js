@@ -13,7 +13,8 @@ function createWindow() {
 
     appWindow = new BrowserWindow({ width, height });
     appWindow.maximize();
-    appWindow.loadFile('dist/path/index.html');
+    // appWindow.loadFile('dist/path/index.html');
+    appWindow.loadURL('http://localhost:4200/casa');
 
     appWindow.on('closed', () => {
         appWindow = null;
