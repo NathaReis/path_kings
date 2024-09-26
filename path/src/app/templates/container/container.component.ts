@@ -78,16 +78,42 @@ export class ContainerComponent implements OnInit {
   }
 
   formatarId(): void {
-    const local = localStorage.getItem("id");
+    const test = localStorage.getItem("test");
+    const idSaved = sessionStorage.getItem("id");
+    let atraso = 0;
+    
+    if(!test && !idSaved) {
+      localStorage.removeItem("id");
+      localStorage.setItem("test", 'true');
+    }
+    
+    if(!idSaved) {
+      const local = localStorage.getItem("id");
 
-    if(local) {
-      const lista = JSON.parse(local);
-      this.id = String(lista.length);
-      localStorage.setItem("id", lista.push(this.id));
+      if(local) {
+        const localList = JSON.parse(local);
+        const newList = [...localList,String(++localList.length)];
+        localStorage.setItem("id", JSON.stringify(newList));
+        this.id = localList.length
+        atraso = 500 * localList.length;
+      }
+      else {
+        localStorage.setItem("id", JSON.stringify(['1']));
+        this.id = '1';
+        atraso = 0;
+      }
+      sessionStorage.setItem("id", this.id);
     }
-    else {
-      localStorage.setItem("id", JSON.stringify([1]));
-      this.id = '1';
-    }
+
+    setTimeout(() => {
+      const local = localStorage.getItem("id");
+      setTimeout(() => {
+        if(local) {
+          sessionStorage.setItem("ids", local);
+          localStorage.removeItem("id");
+          localStorage.removeItem("test");
+        }
+      }, 2500 + atraso);
+    }, 2500 + atraso);
   }
 }

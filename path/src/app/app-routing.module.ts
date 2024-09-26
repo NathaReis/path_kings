@@ -12,8 +12,8 @@ import { MediaComponent } from './pages/casa/media/media.component';
 import { TelaMediaComponent } from './pages/tela/tela-media/tela-media.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'casa', pathMatch: 'full'},
-  {path: 'casa', component: CasaComponent},
+  {path: '', redirectTo: '/', pathMatch: 'full'},
+  {path: '', component: CasaComponent},
   {path: 'casa/relogio', component: RelogioComponent},
   {path: 'casa/sorteio', component: SorteioComponent},
   {path: 'casa/media', component: MediaComponent},

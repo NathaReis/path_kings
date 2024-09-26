@@ -14,17 +14,17 @@ function createWindow() {
     appWindow = new BrowserWindow({ width, height });
     appWindow.maximize();
     // appWindow.loadFile('dist/path/index.html');
-    appWindow.loadURL('http://localhost:4200/casa');
-
+    appWindow.loadURL('http://localhost:64535/');
+    
     appWindow.on('closed', () => {
         appWindow = null;
     });
-
+    
     const displays = screen.getAllDisplays();
     const externalDisplay = displays.filter((display) => {
         return display.bounds.x !== 0 || display.bounds.y !== 0;
     });
-
+    
     if(externalDisplay) {
         externalDisplay.map((display) => {
             setTimeout(() => {
@@ -35,7 +35,8 @@ function createWindow() {
                     minHeight: display.workAreaSize.height
                 });
                 win.maximize();
-                win.loadFile('dist/path/index.html');
+                // win.loadFile('dist/path/index.html');
+                win.loadURL('http://localhost:64535/');
             },500);
         });
     }
