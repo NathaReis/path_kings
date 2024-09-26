@@ -96,6 +96,8 @@ export class ContainerComponent implements OnInit {
         localStorage.setItem("id", JSON.stringify(newList));
         this.id = localList.length
         atraso = 500 * localList.length;
+
+        this.router.navigate(['tela'])
       }
       else {
         localStorage.setItem("id", JSON.stringify(['1']));

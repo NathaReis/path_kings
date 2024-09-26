@@ -8,6 +8,7 @@ const {
 let appWindow;
 
 function createWindow() {
+    const secundaryDisplay = [];
     const primaryDisplay = screen.getPrimaryDisplay();
     const { width, height } = primaryDisplay.workAreaSize
 
@@ -18,6 +19,9 @@ function createWindow() {
     
     appWindow.on('closed', () => {
         appWindow = null;
+        secundaryDisplay.map((display) => {
+            display.close();
+        });
     });
     
     const displays = screen.getAllDisplays();
@@ -32,9 +36,11 @@ function createWindow() {
                     x: display.bounds.x,
                     y: display.bounds.y,
                     minWidth: display.workAreaSize.width,
-                    minHeight: display.workAreaSize.height
+                    minHeight: display.workAreaSize.height,
+                    frame: false
                 });
                 win.maximize();
+                secundaryDisplay.push(win);
                 // win.loadFile('dist/path/index.html');
                 win.loadURL('http://localhost:64535/');
             },500);

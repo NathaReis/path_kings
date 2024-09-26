@@ -55,7 +55,7 @@ export class TelaService {
           tela.icone = this.iconeRotaService.iconeRota(rota);
         }
       })
-      const rotaUrl = rota === 'tela' ? `tela/${numero}` : `tela/${rota}/${numero}`;// Caso esteja voltando para a tela inicial tela/numero caso contrário é preciso a rota dentro de tela
+      const rotaUrl = rota === 'tela' ? `tela` : `tela/${rota}`;// Caso esteja voltando para a tela inicial tela/numero caso contrário é preciso a rota dentro de tela
       localStorage.setItem("tela", `${numero},${rotaUrl}`);// Envia comando de navegação
     })
     this.registrarSessionStorage();// Registra a nova rota na sessão
