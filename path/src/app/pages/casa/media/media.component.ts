@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Media } from 'src/app/models/Media';
 import { Tela } from 'src/app/models/Tela';
-import { MediaService } from 'src/app/services/media.service';
 import { TelaService } from 'src/app/services/tela.service';
 
 interface Tipo {
@@ -23,14 +22,10 @@ export class MediaComponent implements OnInit {
   telas: Tela[] = [];
   audio: string = "";
 
-  constructor(
-    private telaService: TelaService,
-    private mediaService: MediaService
-  ) { }
+  constructor(private telaService: TelaService) { }
 
   ngOnInit(): void {
     this.telas = this.telaService.buscar();
-    this.buscarMedia();
   }
 
   toggleTodasTelas(ativar: boolean): void {
@@ -41,35 +36,12 @@ export class MediaComponent implements OnInit {
     this.tipoAtual = tipo;
   }
 
-  buscarMedia(): void {
-    this.mediaService.buscarMedias().subscribe({
-      next: (value) => this.listaTipos = value,
-      error: (error) => console.error(error)
-    });
-  }
-
   uploadFile(dados: any): void {
     const arquivo = dados.target.files[0];
-    this.mediaService.converterBase64(arquivo).subscribe({
-      next: (arquivoConvertido: string) => {
-        this.mediaService.criarMedia(this.tipoAtual,arquivo.name,arquivoConvertido).subscribe({
-          next: () => this.buscarMedia(),
-          error: (error) => console.error(error)
-        });
-      },
-      error(err) {
-        alert(err);
-      },
-    });
   }
 
   deleteMedia(id: string): void {
-    this.mediaService.deletarMedia(id).subscribe({
-      next: (value) => {
-        alert(`Media ${value.nome}, excluída com sucesso!`);
-        this.buscarMedia();
-      }
-    });
+
   }
 
   navegar(): void {

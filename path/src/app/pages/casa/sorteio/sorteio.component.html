@@ -10,9 +10,6 @@
                 <button type="button" mat-fab color="warn" [disabled]="!bloquearForm" (click)="resetarForm()">
                     <mat-icon>delete</mat-icon>
                 </button>
-                <button type="button" mat-mini-fab color="primary" (click)="setVolume()" [disabled]="!(sourceAudio && sourceAudioFim)">
-                    <mat-icon>{{ songIcon }}</mat-icon>
-                </button>
             </div>
 
             <div class="configuracao">
@@ -63,8 +60,7 @@
             </section>
         </div>
         <div class="resultadoAtual">
-            <audio [src]="sourceAudio" controls loop id="suspense" [volume]="volume"></audio>
-            <audio [src]="sourceAudioFim" controls id="fim" [volume]="volume"></audio>
+            <audio src="https://www.youtube.com/watch?v=xldy72uAxFY" controls></audio>
             {{ numeroAtual }}
         </div>
     </body>

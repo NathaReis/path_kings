@@ -13,29 +13,20 @@ export class TelaService {
   constructor(readonly iconeRotaService: IconeRotaService) { }
 
   private registrarSessionStorage(): void {
-    if(this.listaTelas.length > 0) {
-      const numeros = this.listaTelas.map(el => el.numero);// Busca os números das telas
-      const icones = this.listaTelas.map(el => el.icone);// Busca as rotas/icones das telas
-
-      const numerosStr = numeros.join(",");// Transforma eles em uma array
-      const iconesStr = icones.join(",");
-
-      sessionStorage.setItem("numeros", numerosStr); // Registra na sessão
-      sessionStorage.setItem("icones", iconesStr); 
-      return;
-    }
-    sessionStorage.removeItem("numeros");// Se não existir lista, exclui a sessão
-    sessionStorage.removeItem("icones");
+    const numeros = this.listaTelas.map(el => String(el.numero));// Busca os números das telas
+    const icones = this.listaTelas.map(el => el.icone);// Busca as rotas/icones das telas
+    sessionStorage.setItem("ids", JSON.stringify(numeros)); // Registra na sessão
+    sessionStorage.setItem("icones", JSON.stringify(icones)); 
   }
 
-  buscar(): Tela[] {
-    const sessionNumeros = sessionStorage.getItem("numeros");
+  buscar(): any {
+    const sessionNumeros = sessionStorage.getItem("ids");
     const sessionRotas = sessionStorage.getItem("icones");
 
     if(sessionNumeros && sessionRotas) {
       this.listaTelas = [];
-      const numeros = sessionNumeros.split(",");
-      const rotas = sessionRotas.split(",");
+      const numeros = JSON.parse(sessionNumeros);
+      const rotas = JSON.parse(sessionRotas);
 
       for(let posicao in numeros) {
         this.listaTelas.push({

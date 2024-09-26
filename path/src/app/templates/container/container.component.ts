@@ -34,8 +34,13 @@ export class ContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.formatarId();
+    const idSaved = sessionStorage.getItem("id");
+    if(!idSaved) {
+      this.formatarId();
+    }
+    else {
+      this.id = idSaved;
+    }
 
     window.onstorage = (event) => {
       const chave = event.key;
@@ -79,40 +84,49 @@ export class ContainerComponent implements OnInit {
 
   formatarId(): void {
     const test = localStorage.getItem("test");
-    const idSaved = sessionStorage.getItem("id");
     let atraso = 0;
     
-    if(!test && !idSaved) {
+    if(!test) {
       localStorage.removeItem("id");
+      localStorage.removeItem("icones");
       localStorage.setItem("test", 'true');
     }
     
-    if(!idSaved) {
-      const local = localStorage.getItem("id");
+    
+    const local = localStorage.getItem("id");
+    const icones = localStorage.getItem("icones");
 
-      if(local) {
-        const localList = JSON.parse(local);
-        const newList = [...localList,String(++localList.length)];
-        localStorage.setItem("id", JSON.stringify(newList));
-        this.id = localList.length
-        atraso = 500 * localList.length;
+    if(local && icones) {
+      const localList = JSON.parse(local);
+      const newList = [...localList,String(++localList.length)];
+      localStorage.setItem("id", JSON.stringify(newList));
 
-        this.router.navigate(['tela'])
-      }
-      else {
-        localStorage.setItem("id", JSON.stringify(['1']));
-        this.id = '1';
-        atraso = 0;
-      }
-      sessionStorage.setItem("id", this.id);
+      const iconesList = JSON.parse(icones);
+      const newIcones = [...iconesList,'villa'];
+      localStorage.setItem("icones", JSON.stringify(newIcones));
+
+      this.id = localList.length
+      atraso = 500 * localList.length;
+
+      this.router.navigate(['tela'])
     }
+    else {
+      localStorage.setItem("id", JSON.stringify(['1']));
+      localStorage.setItem("icones", JSON.stringify(['home']));
+      this.id = '1';
+      atraso = 0;
+    }
+    sessionStorage.setItem("id", this.id);
 
     setTimeout(() => {
       const local = localStorage.getItem("id");
+      const icones = localStorage.getItem("icones");
       setTimeout(() => {
-        if(local) {
+        if(local && icones) {
           sessionStorage.setItem("ids", local);
+          sessionStorage.setItem("icones", icones);
           localStorage.removeItem("id");
+          localStorage.removeItem("icones");
           localStorage.removeItem("test");
         }
       }, 2500 + atraso);

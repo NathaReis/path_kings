@@ -23,6 +23,8 @@ export class CasaComponent implements OnInit {
   }
 
   voltarTela(numero: number): void {
-    this.telaService.navegar('tela',[numero]);
+    if(numero !== 1) {
+      this.telaService.navegar('tela',[numero]);
+    }
   }
 }

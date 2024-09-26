@@ -10,7 +10,7 @@ export class HeaderService {
 
   pages: Header[] = [
     {
-      rota: '/casa',
+      rota: '/',
       icon: 'home',
       class: 'logo',
       nome: 'Casa'
