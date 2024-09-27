@@ -47,7 +47,6 @@ export class MediaComponent implements OnInit {
   navegar(): void {
     if(this.telaSelecionada.includes('todas')) {
       const telasId = this.telas.map((tela: Tela) => tela.numero)
-      console.log(telasId)
       this.telaService.navegar('media',telasId);
     }
     else {

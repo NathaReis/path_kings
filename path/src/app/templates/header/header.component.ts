@@ -22,4 +22,8 @@ export class HeaderComponent {
   toggleMenu(): void {
     this.mobile = this.mobile == 'desativado' ? 'ativado' : 'desativado';
   }
+
+  closePage(): void {
+    window.close();
+  }
 }

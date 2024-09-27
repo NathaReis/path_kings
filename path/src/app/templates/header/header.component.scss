@@ -57,6 +57,11 @@ header .logo:hover {
     border-radius: 0 40px 40px 0 / 0 100px 100px 0;
 }
 
+header #close {
+    position: absolute;
+    right: 10px;
+}
+
 header .temas {
     position: absolute;
     right: 20px;
@@ -141,7 +146,7 @@ li.ativado {
     display: block;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
     .desktop {
         display: none;
     }

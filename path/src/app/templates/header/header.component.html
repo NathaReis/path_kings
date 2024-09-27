@@ -17,6 +17,11 @@
             {{ item.nome }}
           </a> 
         </li>
+        <li id="close" (click)="closePage()">
+          <button mat-mini-fab color="warn">
+            <mat-icon>close</mat-icon>
+          </button>
+        </li>
         <li class="mobile">
           <button mat-fab color="info" (click)="toggleMenu()">
             <mat-icon>menu</mat-icon>

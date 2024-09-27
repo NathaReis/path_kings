@@ -2,8 +2,9 @@ const {
     app,
     BrowserWindow,
     screen,
-    ipcRenderer
 } = require('electron');
+
+const path = require('path');
 
 let appWindow;
 
@@ -12,10 +13,17 @@ function createWindow() {
     const primaryDisplay = screen.getPrimaryDisplay();
     const { width, height } = primaryDisplay.workAreaSize
 
-    appWindow = new BrowserWindow({ width, height });
+    appWindow = new BrowserWindow({ 
+        width, 
+        height,
+        minWidth: 800,
+        minHeight: 600,
+        frame: false
+     });
     appWindow.maximize();
-    // appWindow.loadFile('dist/path/index.html');
-    appWindow.loadURL('http://localhost:7777/');
+    console.log(path.join(__dirname, 'dist/path/index.html'))
+    appWindow.loadFile(path.join(__dirname, 'dist/path/index.html'));
+    // appWindow.loadURL('http://localhost:7777/');
     
     appWindow.on('closed', () => {
         appWindow = null;
@@ -41,13 +49,13 @@ function createWindow() {
                 });
                 win.maximize();
                 secundaryDisplay.push(win);
-                // win.loadFile('dist/path/index.html');
-                win.loadURL('http://localhost:7777/');
+                win.loadFile(path.join(__dirname, 'dist/path/index.html'));
+                // win.loadURL('http://localhost:7777/');
 
                 // Abre o DevTools quando a janela estiver pronta
-                win.webContents.on('did-finish-load', () => {
-                    win.webContents.openDevTools();
-                });
+                // win.webContents.on('did-finish-load', () => {
+                //     win.webContents.openDevTools();
+                // });
             },500);
         });
     }

@@ -12,7 +12,6 @@ import { MediaComponent } from './pages/casa/media/media.component';
 import { TelaMediaComponent } from './pages/tela/tela-media/tela-media.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/', pathMatch: 'full'},
   {path: '', component: CasaComponent},
   {path: 'casa/relogio', component: RelogioComponent},
   {path: 'casa/sorteio', component: SorteioComponent},
@@ -23,7 +22,7 @@ const routes: Routes = [
   {path: 'tela/tempo', component: TelaTempoComponent},
   {path: 'tela/sorteio', component: TelaSorteioComponent},
   {path: 'tela/media', component: TelaMediaComponent},
-  {path: '**', redirectTo: 'casa', pathMatch: 'full'},
+  {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
 @NgModule({
