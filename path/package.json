@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "start": "ng serve",
+    "start": "ng serve --port 7777",
     "start-db": "nodemon -e json -x \"json-server --watch db.json --port 3000\"",
     "start-path": "concurrently \"ng serve\" nodemon -e json -x \"json-server --watch db.json --port 3000\"",
     "electron": "electron .",

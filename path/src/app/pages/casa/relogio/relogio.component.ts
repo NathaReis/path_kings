@@ -37,23 +37,25 @@ export class RelogioComponent implements OnInit {
   carregarPagina(tipo: string, telas: number[]): void {
     this.telaService.navegar(tipo, telas); // Navegar para tela selecionada
 
-    for(let telaExistente of this.telas) {
-      for(let telaCriada of telas) {
-        if(telaExistente.numero == telaCriada) {
-          if(telaExistente.icone === 'access_time' || telaExistente.icone === 'timer') {
-            this.telaService.recarregar([telaExistente.numero]);
-            if(tipo == 'tempo') {
-              const retorno = `${telaCriada},${this.minutos}`;
-              setTimeout(() => {
-                this.configurarTempo(retorno);
-              },3000);
+    if(tipo == 'tempo') {
+      for(let telaExistente of this.telas) {
+        for(let telaCriada of telas) {
+          if(telaExistente.numero == telaCriada) {
+
+            if(telaExistente.icone === 'access_time' || telaExistente.icone === 'timer') {
+
+              this.telaService.navegar("tela", [telaExistente.numero]);
+                const retorno = `${telaCriada},${this.minutos}`;
+                setTimeout(() => {
+                  this.telaService.navegar("tempo", [telaExistente.numero]);
+                  this.configurarTempo(retorno);
+                },2000);
+                
+            }// Se for uma tela de relogio recarregar para não enviar mais de um localStorage por vez
+            else {
+              this.configurarTempo(`${telaCriada},${this.minutos}`);
             }
-          }// Se for uma tela de relogio recarregar para não enviar mais de um localStorage por vez
-          else {
-            if(tipo == 'tempo') {
-              const retorno = `${telaCriada},${this.minutos}`;
-              this.configurarTempo(retorno);
-            }
+
           }
         }
       }
@@ -69,19 +71,9 @@ export class RelogioComponent implements OnInit {
   }
 
   onSubmit(form: any): void {
-    let telas: number[] | 'todas' = form.value.telas;
+    const telas: number[] = form.value.telas == 'todas' ? this.telas.map((tela: Tela) => tela.numero) : form.value.telas;
     const tipo: string = form.value.tipo;
-
-    if(telas) {
-      if(telas == 'todas') {
-        telas = this.telas.map((tela: Tela) => tela.numero);
-      }// Se todas as telas 
-
-      this.carregarPagina(tipo, telas);
-    }
-    else {
-      console.error('Selecione uma tela.')
-    }
+    this.carregarPagina(tipo, telas);
     this.limparForm();
   }
 }

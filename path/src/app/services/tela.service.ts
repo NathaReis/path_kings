@@ -36,11 +36,11 @@ export class TelaService {
       }
 
     }
-    return this.listaTelas;
+    return this.listaTelas.filter((tela: Tela) => tela.numero != 1);
   }
 
   navegar(rota: string, numeros: number[]): void {
-    numeros.map((numero: number) => {
+    const [ icone, numero ] = numeros.map((numero: number) => {
       this.listaTelas.map((tela: Tela) => {
         if(tela.numero == numero) {
           tela.icone = this.iconeRotaService.iconeRota(rota);
@@ -48,17 +48,13 @@ export class TelaService {
       })
       const rotaUrl = rota === 'tela' ? `tela` : `tela/${rota}`;// Caso esteja voltando para a tela inicial tela/numero caso contrário é preciso a rota dentro de tela
       localStorage.setItem("tela", `${numero},${rotaUrl}`);// Envia comando de navegação
-    })
+      return [this.listaTelas.map((tela: Tela) => tela.icone),this.listaTelas.map((tela: Tela) => tela.numero).join(",")];
+    })[0];
+    localStorage.setItem("atualizarIcones", `${numero},${icone},${icone.length}`);
     this.registrarSessionStorage();// Registra a nova rota na sessão
   }
 
-  recarregar(numeros: number[]) {
-    numeros.map((numero: number) => {
-      localStorage.setItem("tela", `${numero},recarregar`);// Envia comando para recarregar tela
-    });
-  }
-
-  eventosLocalStorage(resultado: any, id: string, telaUrl: string, router: Router): void {
+  eventosLocalStorage(resultado: any, id: string, router: Router): void {
     const idResultado = resultado[0];
     const comando = resultado[1];
     
@@ -66,13 +62,6 @@ export class TelaService {
       switch(comando) {
         case 'fechar':
           window.close();
-          break
-        case 'decrementoId':
-          const novoId = +id - 1;
-          router.navigate([`${telaUrl}${novoId}`]);
-          break
-        case 'recarregar':
-          location.reload();
           break
         default: // Caso seja para navegar, o comando é a rota
           const rotaUrl = comando;

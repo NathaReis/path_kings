@@ -4,17 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RelogioService {
-  private relogios: { [key: number]: string } = {
-    1: '00:00:00',
-    2: '00:00:00',
-    3: '00:00:00'
-  };
+  private relogios: { [key: number]: string } = { };
 
-  setRelogio(id: 1 | 2| 3, valor: string): void {
+  setRelogio(id: number, valor: string): void {
     this.relogios[id] = valor;
   }
 
-  getRelogio(id: 1 | 2| 3): string {
+  getRelogio(id: number): string {
     return this.relogios[id];
   }
 

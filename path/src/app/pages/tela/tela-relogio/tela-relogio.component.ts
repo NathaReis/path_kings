@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Clima } from '../../../models/Clima';
 import { GeoService } from '../../../services/geo.service';
-import { ActivatedRoute } from '@angular/router';
+import { TelaService } from 'src/app/services/tela.service';
+import { Tela } from 'src/app/models/Tela';
 
 
 @Component({
@@ -18,15 +19,15 @@ export class TelaRelogioComponent implements OnInit {
   hora: string = '00';
   minuto: string = '00';
 
-  constructor (private geo: GeoService, private route: ActivatedRoute) {}
+  constructor (private geo: GeoService, private telaService: TelaService) {}
 
   ngOnInit(): void {
     this.buscarHorario();
     this.buscarClima();
-
-    this.route.params.subscribe((params: any) => {
-      this.id = String(params["id"]);
-    });// Busca id
+    const idSaved = sessionStorage.getItem("id");
+    if(idSaved) {
+      this.id = idSaved;
+    }
   }
 
   async buscarClima() {
@@ -42,12 +43,21 @@ export class TelaRelogioComponent implements OnInit {
   }
 
   buscarHorario() {
-    setInterval(() => {
-      const agora = new Date();
-      this.hora = this.formatarHora(agora.getHours());
-      this.minuto = this.formatarHora(agora.getMinutes());
-      const segundo = this.formatarHora(agora.getSeconds());
-      localStorage.setItem(`tempo_status_${this.id}`,`${this.hora}:${this.minuto}:${segundo}`);
+    setTimeout(() => {
+      const tela = this.telaService.buscar().find((tela: Tela) => tela.numero === +this.id);
+
+      if(tela.icone == 'access_time') {
+        const agora = new Date();
+        this.hora = this.formatarHora(agora.getHours());
+        this.minuto = this.formatarHora(agora.getMinutes());
+        const segundo = this.formatarHora(agora.getSeconds());
+        localStorage.setItem(`tempo_status_${this.id}`,`${this.hora}:${this.minuto}:${segundo}`);
+        this.buscarHorario();
+      }
+      else {
+        localStorage.setItem(`tempo_status_${this.id}`,'00:00:00');
+      }
+
     }, 1000); // 1 segundo
   }
 }

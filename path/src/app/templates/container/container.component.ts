@@ -19,7 +19,6 @@ export class ContainerComponent implements OnInit {
   id: string = '';
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private telaService: TelaService,
     private relogioService: RelogioService
@@ -45,38 +44,47 @@ export class ContainerComponent implements OnInit {
     window.onstorage = (event) => {
       const chave = event.key;
       const novoValor = event.newValue;
-      const telaUrl = this.router.url.slice(0,-1);
 
       if(this.monitor == 'true') {
         if(this.validoIdNovoValor(novoValor) && novoValor) {
           if(chave === 'tela') {
-            this.telaService.eventosLocalStorage(novoValor.split(","), this.id, telaUrl, this.router);      
+            this.telaService.eventosLocalStorage(novoValor.split(","), this.id, this.router);      
           }
-          if(chave === 'tempo') {  
+          if(chave === 'tempo') { 
             const ultimoIndex = novoValor.split(",").length - 1;
             const horario = novoValor.split(",")[ultimoIndex];
             this.tempo.emit(horario);
           }
           if(chave === 'sorteio') {
             this.sorteio.emit(novoValor.split(",").pop());  
-            localStorage.removeItem('sorteio');
           }
           if(chave === 'media') {
             this.media.emit(novoValor.split(",").pop());
-            localStorage.removeItem('media');
           }
+          if(chave === 'atualizarIcones') {
+            const valores = novoValor.split(",");
+            const quantidadeIcones = Number(valores.pop()) + 1;
+            const tamanhoTotal = valores.length;
+            const quantidadeIds = tamanhoTotal - quantidadeIcones;
+                       
+            const icones = [];
+            for(let pos in valores) {
+              if(+pos > quantidadeIds) {
+                icones.push(valores[pos]);
+              }
+            }
+
+            sessionStorage.setItem("icones", JSON.stringify(icones));
+          }
+          localStorage.removeItem(String(chave));        
         }
       }
       else {
         // Retonrno do relógio
-        if(chave === 'tempo_status_1') {
-          this.relogioService.setRelogio(1,String(novoValor));
-        }
-        if(chave === 'tempo_status_2') {
-          this.relogioService.setRelogio(2,String(novoValor));
-        }
-        if(chave === 'tempo_status_3') {
-          this.relogioService.setRelogio(3,String(novoValor));
+        const tempoRegex = new RegExp('tempo_status', 'i');
+
+        if(tempoRegex.test(String(chave)) && chave) {
+          this.relogioService.setRelogio(+chave.split('_')[2],String(novoValor));
         }
       }
     }

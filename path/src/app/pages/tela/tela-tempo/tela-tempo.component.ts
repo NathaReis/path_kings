@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { GeoService } from '../../../services/geo.service';
 import { Clima } from '../../../models/Clima';
-import { ActivatedRoute } from '@angular/router';
+import { TelaService } from 'src/app/services/tela.service';
+import { Tela } from 'src/app/models/Tela';
 
 @Component({
   selector: 'app-tela-tempo',
@@ -16,17 +17,16 @@ export class TelaTempoComponent implements OnInit {
   minuto: string = '00';
   segundo: string = '00';
   seg: number = 0;
-  primeiraVez: boolean = true;
-  pararContagem: boolean = false;
 
-  constructor(readonly geo: GeoService, private route: ActivatedRoute) { }
+  constructor(readonly geo: GeoService, private telaService: TelaService) { }
 
   ngOnInit(): void {
-    this.buscarClima();
+    // this.buscarClima();
   
-    this.route.params.subscribe((params: any) => {
-      this.id = String(params["id"]);
-    });// Busca id
+    const idSaved = sessionStorage.getItem("id");
+    if(idSaved) {
+      this.id = idSaved;
+    }
 
     this.buscarRegistro();
   }
@@ -73,7 +73,6 @@ export class TelaTempoComponent implements OnInit {
   }
 
   resetContagem() {
-    this.pararContagem = true;
     this.seg = 0;
     this.segundo = '00';
     this.minuto = '00';
@@ -108,7 +107,7 @@ export class TelaTempoComponent implements OnInit {
       const tempo = sessionStorage.getItem(`tempo_${this.id}`);
       const segundo = sessionStorage.getItem(`segundo_${this.id}`);
       const semLocalStorage = this.hora === '00' && this.minuto === '00';
-      if(!!tempo && !!segundo && semLocalStorage && this.primeiraVez) {
+      if(!!tempo && !!segundo && semLocalStorage) {
         this.iniciarContagem(tempo,segundo);
       }
     },500); // Esperar comando do LocalStorage
@@ -119,17 +118,23 @@ export class TelaTempoComponent implements OnInit {
     const minuto = tempo.split(":")[1];
     this.segundo = segundo ? segundo : '00';
     this.seg = segundo ? +segundo : 0;
-    this.pararContagem = false;
 
     this.renderizarTempo(hora,minuto,this.segundo); // Registro do tempo
+    this.contador();
+  }
 
-    if(this.primeiraVez) {
-      this.primeiraVez = false;
-      setInterval(() => {
-        if(!this.pararContagem) {
-          this.contar();
-        }
-      }, 1000); // Inicio a contagem
-    }
+  contador(): void {
+    setTimeout(() => {
+      const tela = this.telaService.buscar().find((tela: Tela) => tela.numero === +this.id);
+
+      if(tela.icone == 'timer') {
+        this.contar();
+        this.contador();
+      }
+      else {
+        localStorage.setItem(`tempo_status_${this.id}`,'00:00:00');
+      }
+
+    }, 1000);// Inicia a contagem
   }
 }
