@@ -21,8 +21,7 @@ function createWindow() {
         frame: false
      });
     appWindow.maximize();
-    console.log(path.join(__dirname, 'dist/path/index.html'))
-    appWindow.loadFile(path.join(__dirname, 'dist/path/index.html'));
+    appWindow.loadFile(path.join(__dirname, 'src/index.html'));
     // appWindow.loadURL('http://localhost:7777/');
     
     appWindow.on('closed', () => {
@@ -30,6 +29,10 @@ function createWindow() {
         secundaryDisplay.map((display) => {
             display.close();
         });
+    });
+
+    appWindow.webContents.on('did-finish-load', () => {
+        appWindow.webContents.openDevTools();
     });
     
     const displays = screen.getAllDisplays();
@@ -49,13 +52,13 @@ function createWindow() {
                 });
                 win.maximize();
                 secundaryDisplay.push(win);
-                win.loadFile(path.join(__dirname, 'dist/path/index.html'));
+                win.loadFile(path.join(__dirname, 'src/index.html'));
                 // win.loadURL('http://localhost:7777/');
 
                 // Abre o DevTools quando a janela estiver pronta
-                // win.webContents.on('did-finish-load', () => {
-                //     win.webContents.openDevTools();
-                // });
+                win.webContents.on('did-finish-load', () => {
+                    win.webContents.openDevTools();
+                });
             },500);
         });
     }
