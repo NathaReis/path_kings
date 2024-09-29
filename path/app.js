@@ -18,11 +18,11 @@ function createWindow() {
         height,
         minWidth: 800,
         minHeight: 600,
-        frame: false
+        maximize: true,
+        autoHideMenuBar: true
      });
-    appWindow.maximize();
-    appWindow.loadFile(path.join(__dirname, 'src/index.html'));
-    // appWindow.loadURL('http://localhost:7777/');
+    appWindow.loadFile(path.join(__dirname, 'dist/path/index.html'));
+    // appWindow.loadURL('http://localhost:4200/');
     
     appWindow.on('closed', () => {
         appWindow = null;
@@ -31,9 +31,9 @@ function createWindow() {
         });
     });
 
-    appWindow.webContents.on('did-finish-load', () => {
-        appWindow.webContents.openDevTools();
-    });
+    // appWindow.webContents.on('did-finish-load', () => {
+    //     appWindow.webContents.openDevTools();
+    // });
     
     const displays = screen.getAllDisplays();
     const externalDisplay = displays.filter((display) => {
@@ -50,16 +50,15 @@ function createWindow() {
                     minHeight: display.workAreaSize.height,
                     frame: false
                 });
-                win.maximize();
                 secundaryDisplay.push(win);
-                win.loadFile(path.join(__dirname, 'src/index.html'));
-                // win.loadURL('http://localhost:7777/');
+                win.loadFile(path.join(__dirname, 'dist/path/index.html'));
+                // win.loadURL('http://localhost:4200/');
 
                 // Abre o DevTools quando a janela estiver pronta
-                win.webContents.on('did-finish-load', () => {
-                    win.webContents.openDevTools();
-                });
-            },500);
+                // win.webContents.on('did-finish-load', () => {
+                //     win.webContents.openDevTools();
+                // });
+            }, 500);
         });
     }
 }

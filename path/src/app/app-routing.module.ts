@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'casa/relogio', component: RelogioComponent},
   {path: 'casa/sorteio', component: SorteioComponent},
   {path: 'casa/media', component: MediaComponent},
-
+  
   {path: 'tela', component: TelaComponent},
   {path: 'tela/relogio', component: TelaRelogioComponent},
   {path: 'tela/tempo', component: TelaTempoComponent},

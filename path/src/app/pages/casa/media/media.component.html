@@ -1,71 +1,11 @@
 <path-container>
     <path-header></path-header>
-    <body>
-        <input (change)="uploadFile($event)" type="file" [multiple]="false" id="video" accept=".mp4, .webm">
-        <input (change)="uploadFile($event)" type="file" [multiple]="false" id="imagem" accept=".jpeg, .jpg, .png, .webp">
-        <input (change)="uploadFile($event)" type="file" [multiple]="false" id="audio" accept=".mp3, .wav">
-        <input (change)="uploadFile($event)" type="file" [multiple]="false" id="powerpoint" accept=".pptx, application/vnd.ms-powerpoint">
+    <body id="container">
+        <div id="controle">
+            <button mat-raised-button (click)="openBottomSheet()">Open file</button>
+        </div>
+        <div id="gerencial">
 
-        <fieldset id="controles">
-            <legend>CONTROLES</legend>
-            <div class="controle video">
-
-            </div>
-            <div class="controle imagem">
-
-            </div>
-            <div class="controle audio">
-
-            </div>
-            <div class="controle powerpoint">
-
-            </div>
-        </fieldset>
-
-        <fieldset id="medias">
-            <nav>
-                <ul>
-                    <li *ngFor="let tipo of listaTipos" class="navMedia" id="tipo.nome" (click)="navMidia(tipo.categoria)">
-                        {{ tipo.categoria.toUpperCase() }}
-                    </li>
-                </ul>
-            </nav>
-
-            <div *ngFor="let tipo of listaTipos">
-                <div  class="media {{tipo.categoria}}" *ngIf="tipo.categoria == tipoAtual">
-
-                    <header class="header">
-                        {{ tipo.categoria.toUpperCase() }}
-                        <mat-button-toggle-group *ngIf="telas.length > 0" 
-                            class="buttonToggleBox"  
-                            name="telas" 
-                            [(ngModel)]="telaSelecionada" 
-                            multiple required aria-label="Font Style">
-                          <mat-button-toggle value="todas" (click)="toggleTodasTelas(true)">Todas</mat-button-toggle>
-                          <mat-button-toggle *ngFor="let tela of telas" value="{{tela.numero}}" (click)="toggleTodasTelas(false)">Tela {{tela.numero}}</mat-button-toggle>
-                        </mat-button-toggle-group>   
-    
-                        <label for="{{tipo.categoria}}" class="upload">
-                            <mat-icon>upload</mat-icon>
-                        </label>
-                    </header>
-                    
-                    <div class="lista">
-                        <div *ngFor="let dado of tipo.dados" class="media-item">
-                            <p>{{ dado.nome }}</p>   
-                            <p>
-                                <button mat-icon-button [disabled]="telaSelecionada.length <= 0"  (click)="selecioneArquivo(dado)">
-                                    <mat-icon>play_arrow</mat-icon>
-                                </button>    
-                                <button mat-icon-button (click)="deleteMedia(dado.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>                        
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
+        </div>
     </body>
-    <audio [src]="audio" autoplay></audio>
 </path-container>

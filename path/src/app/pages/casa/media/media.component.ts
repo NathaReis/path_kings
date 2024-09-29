@@ -1,13 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
-import { Media } from 'src/app/models/Media';
 import { Tela } from 'src/app/models/Tela';
 import { TelaService } from 'src/app/services/tela.service';
-
-interface Tipo {
-  categoria: string,
-  dados: Media[]
-}
+import { FilesComponent } from 'src/app/templates/files/files.component';
 
 @Component({
   selector: 'app-media',
@@ -15,12 +11,9 @@ interface Tipo {
   styleUrls: ['./media.component.scss']
 })
 export class MediaComponent implements OnInit {
-  tipoAtual: string = 'video';
-  ultimoArquivoSelecionado: Tipo = { categoria: '', dados: [] };
-  listaTipos: Tipo[] = [];
   telaSelecionada: string[] = [];
   telas: Tela[] = [];
-  audio: string = "";
+  private _bottomSheet = inject(MatBottomSheet);
 
   constructor(private telaService: TelaService) { }
 
@@ -32,36 +25,7 @@ export class MediaComponent implements OnInit {
     ativar ? this.telaSelecionada = ['todas'] : this.telaSelecionada = this.telaSelecionada.filter((tela: string) => tela !== 'todas');
   }
 
-  navMidia(tipo: string): void {
-    this.tipoAtual = tipo;
-  }
-
-  uploadFile(dados: any): void {
-    const arquivo = dados.target.files[0];
-  }
-
-  deleteMedia(id: string): void {
-
-  }
-
-  navegar(): void {
-    if(this.telaSelecionada.includes('todas')) {
-      const telasId = this.telas.map((tela: Tela) => tela.numero)
-      this.telaService.navegar('media',telasId);
-    }
-    else {
-      const telasId = this.telaSelecionada.map((tela: string) => +tela)
-      this.telaService.navegar('media',telasId);
-    }
-  }
-
-  selecioneArquivo(media: Media): void {
-    if(media.categoria != 'audio') {
-      this.navegar();
-      localStorage.setItem('media', `${this.telaSelecionada},${media.id}`);
-    }
-    else {
-      this.audio = media.dados;
-    }
+  openBottomSheet(): void {
+    this._bottomSheet.open(FilesComponent);
   }
 }
