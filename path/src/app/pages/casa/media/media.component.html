@@ -2,7 +2,12 @@
     <path-header></path-header>
     <body id="container">
         <div id="controle">
-            <button mat-raised-button (click)="openBottomSheet()">Open file</button>
+            <mat-select [(value)]="media" id="select">
+              <mat-option value="none">Nenhum</mat-option>
+              <mat-option value="image">Imagem</mat-option>
+              <mat-option value="video">Vídeo</mat-option>
+              <mat-option value="audio">Áudio</mat-option>
+            </mat-select>
         </div>
         <div id="gerencial">
 

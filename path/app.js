@@ -18,11 +18,11 @@ function createWindow() {
         height,
         minWidth: 800,
         minHeight: 600,
-        maximize: true,
-        autoHideMenuBar: true
-     });
-    appWindow.loadFile(path.join(__dirname, 'dist/path/index.html'));
-    // appWindow.loadURL('http://localhost:4200/');
+        autoHideMenuBar: false
+    });
+    appWindow.maximize();
+    // appWindow.loadFile(path.join(__dirname, 'dist/path/index.html'));
+    appWindow.loadURL('http://localhost:55056/');
     
     appWindow.on('closed', () => {
         appWindow = null;
@@ -51,8 +51,8 @@ function createWindow() {
                     frame: false
                 });
                 secundaryDisplay.push(win);
-                win.loadFile(path.join(__dirname, 'dist/path/index.html'));
-                // win.loadURL('http://localhost:4200/');
+                // win.loadFile(path.join(__dirname, 'dist/path/index.html'));
+                win.loadURL('http://localhost:55056/');
 
                 // Abre o DevTools quando a janela estiver pronta
                 // win.webContents.on('did-finish-load', () => {

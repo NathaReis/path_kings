@@ -1,9 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Component, OnInit } from '@angular/core';
 
 import { Tela } from 'src/app/models/Tela';
 import { TelaService } from 'src/app/services/tela.service';
-import { FilesComponent } from 'src/app/templates/files/files.component';
 
 @Component({
   selector: 'app-media',
@@ -13,7 +11,7 @@ import { FilesComponent } from 'src/app/templates/files/files.component';
 export class MediaComponent implements OnInit {
   telaSelecionada: string[] = [];
   telas: Tela[] = [];
-  private _bottomSheet = inject(MatBottomSheet);
+  media: string = 'none';
 
   constructor(private telaService: TelaService) { }
 
@@ -23,9 +21,5 @@ export class MediaComponent implements OnInit {
 
   toggleTodasTelas(ativar: boolean): void {
     ativar ? this.telaSelecionada = ['todas'] : this.telaSelecionada = this.telaSelecionada.filter((tela: string) => tela !== 'todas');
-  }
-
-  openBottomSheet(): void {
-    this._bottomSheet.open(FilesComponent);
   }
 }

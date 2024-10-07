@@ -11,7 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,8 +27,6 @@ import { SorteioComponent } from './pages/casa/sorteio/sorteio.component';
 import { TelaSorteioComponent } from './pages/tela/tela-sorteio/tela-sorteio.component';
 import { MediaComponent } from './pages/casa/media/media.component';
 import { TelaMediaComponent } from './pages/tela/tela-media/tela-media.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FilesComponent } from './templates/files/files.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,6 @@ import { FilesComponent } from './templates/files/files.component';
     TelaSorteioComponent,
     MediaComponent,
     TelaMediaComponent,
-    FilesComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +58,7 @@ import { FilesComponent } from './templates/files/files.component';
     MatCheckboxModule,
     MatListModule,
     HttpClientModule,
-    MatBottomSheetModule
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

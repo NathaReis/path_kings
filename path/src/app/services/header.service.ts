@@ -10,24 +10,24 @@ export class HeaderService {
 
   pages: Header[] = [
     {
-      rota: '/',
       icon: 'home',
+      rota: 'casa',
       class: 'logo',
       nome: 'Casa'
     },
     {
-      rota: '/casa/relogio',
       icon: 'access_time',
+      rota: '/relogio',
       nome: 'tempo'
     },
     {
       nome: 'sorteio',
-      rota: '/casa/sorteio',
+      rota: '/sorteio',
       icon: 'casino'
     },
     {
       nome: 'media',
-      rota: '/casa/media',
+      rota: '/media',
       icon: 'audiotrack'
     }
   ]
