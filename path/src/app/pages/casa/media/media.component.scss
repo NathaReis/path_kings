@@ -4,16 +4,32 @@
     margin: 20px 0 0 5dvw;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color6);
-    border-radius: 5px;
+    gap: 20px;
+    border: 1px solid var(--color2);
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-#select { 
-    width: 200px;  
+#upload-box {
+    height: 70px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
     background-color: var(--color6);
-    height: 40px;
-    padding: 10px 0;
-    border-radius: 10px;
-    text-align: center;
+
+    #select { 
+        width: 200px;  
+        background-color: var(--color6);
+        height: 40px;
+        padding: 10px 0;
+        border-radius: 10px;
+        text-align: center;
+    }
+    
+    #upload {
+        background-color: var(--color6);
+        color: white;
+    }
 }

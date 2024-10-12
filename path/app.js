@@ -22,7 +22,7 @@ function createWindow() {
     });
     appWindow.maximize();
     // appWindow.loadFile(path.join(__dirname, 'dist/path/index.html'));
-    appWindow.loadURL('http://localhost:55056/');
+    appWindow.loadURL('http://localhost:4200/');
     
     appWindow.on('closed', () => {
         appWindow = null;

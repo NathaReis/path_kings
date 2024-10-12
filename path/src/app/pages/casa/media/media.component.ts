@@ -9,17 +9,17 @@ import { TelaService } from 'src/app/services/tela.service';
   styleUrls: ['./media.component.scss']
 })
 export class MediaComponent implements OnInit {
-  telaSelecionada: string[] = [];
-  telas: Tela[] = [];
-  media: string = 'none';
+  media: string = "";
 
   constructor(private telaService: TelaService) { }
 
   ngOnInit(): void {
-    this.telas = this.telaService.buscar();
+
   }
 
-  toggleTodasTelas(ativar: boolean): void {
-    ativar ? this.telaSelecionada = ['todas'] : this.telaSelecionada = this.telaSelecionada.filter((tela: string) => tela !== 'todas');
+  selectedMedia(): void {
+    if(this.media) {
+      console.log(this.media);
+    }
   }
 }
